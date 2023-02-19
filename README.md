@@ -2,7 +2,7 @@
 
 <h2>Description</h2>
 
-- The technical challenge consists of creating an API REST that exposes an system based on transactions customer to customer or customer to storekeeper, but not storekeeper to storekeeper.
+- The technical challenge consists of creating an API REST that exposes an system based on transactions common to common or common to storekeeper, but not storekeeper to storekeeper.
 
 <h2>Requirements</h2>
 
