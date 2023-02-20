@@ -24,3 +24,14 @@ func (ws walletService) GetAll() ([]WalletResponse, error) {
 
 	return response, nil
 }
+
+func (ws walletService) GetById(id int) (GetByIdResponse, error) {
+	wallet, err := ws.walletRepository.GetById(id)
+	if err != nil {
+		return GetByIdResponse{}, err
+	}
+
+	response := GetByIdModelToResponse(wallet)
+
+	return response, nil
+}

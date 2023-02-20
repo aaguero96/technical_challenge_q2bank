@@ -2,6 +2,7 @@ package walletHandler
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/aaguero96/technical_challenge_q2bank/service/walletService"
 	"github.com/gin-gonic/gin"
@@ -25,4 +26,22 @@ func (wh walletHandler) GetAll(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, wallets)
+}
+
+func (wh walletHandler) GetById(ctx *gin.Context) {
+	paramID := ctx.Param("id")
+
+	id, err := strconv.Atoi(paramID)
+	if err != nil {
+		httputil.NewError(ctx, http.StatusBadRequest, err)
+		return
+	}
+
+	user, err := wh.walletService.GetById(id)
+	if err != nil {
+		httputil.NewError(ctx, http.StatusInternalServerError, err)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, user)
 }

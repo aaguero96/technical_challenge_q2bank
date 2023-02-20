@@ -23,3 +23,12 @@ func (wr walletRepository) GetAll() ([]models.WalletModel, error) {
 	}
 	return wallets, nil
 }
+
+func (wr walletRepository) GetById(id int) (models.WalletModel, error) {
+	var wallet models.WalletModel
+	result := wr.db.First(&wallet, id)
+	if result.Error != nil {
+		return models.WalletModel{}, result.Error
+	}
+	return wallet, nil
+}

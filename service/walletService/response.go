@@ -18,3 +18,15 @@ func GetAllModelToResponse(model []models.WalletModel) []WalletResponse {
 	}
 	return response
 }
+
+type GetByIdResponse struct {
+	WalletID int     `json:"wallet_id"`
+	Amount   float64 `json:"amount"`
+}
+
+func GetByIdModelToResponse(model models.WalletModel) GetByIdResponse {
+	return GetByIdResponse{
+		WalletID: model.WalletID,
+		Amount:   model.Amount,
+	}
+}
