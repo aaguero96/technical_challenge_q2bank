@@ -24,3 +24,14 @@ func (us userService) GetAll() ([]UserResponse, error) {
 
 	return response, nil
 }
+
+func (us userService) GetById(id int) (GetByIdResponse, error) {
+	user, err := us.userRepository.GetById(id)
+	if err != nil {
+		return GetByIdResponse{}, err
+	}
+
+	response := GetByIdResponseModelToResponse(user)
+
+	return response, nil
+}

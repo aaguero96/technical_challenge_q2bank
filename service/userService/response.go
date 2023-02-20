@@ -20,3 +20,23 @@ func GetAllModelToResponse(model []models.UserModel) []UserResponse {
 	}
 	return response
 }
+
+type GetByIdResponse struct {
+	Name           string `json:"name"`
+	RegisterNumber int64  `json:"register_number"`
+	RegisterTypeID int    `json:"register_type_id"`
+	Email          string `json:"email"`
+	WalletID       int    `json:"wallet_id"`
+	UserTypeID     int    `json:"user_type_id"`
+}
+
+func GetByIdResponseModelToResponse(model models.UserModel) GetByIdResponse {
+	return GetByIdResponse{
+		Name:           model.Name,
+		RegisterNumber: model.RegisterNumber,
+		RegisterTypeID: model.RegisterTypeID,
+		Email:          model.Email,
+		WalletID:       model.WalletID,
+		UserTypeID:     model.UserTypeID,
+	}
+}

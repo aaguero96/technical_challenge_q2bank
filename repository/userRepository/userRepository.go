@@ -23,3 +23,12 @@ func (ur userRepository) GetAll() ([]models.UserModel, error) {
 	}
 	return users, nil
 }
+
+func (ur userRepository) GetById(id int) (models.UserModel, error) {
+	var user models.UserModel
+	result := ur.db.First(&user, id)
+	if result.Error != nil {
+		return models.UserModel{}, result.Error
+	}
+	return user, nil
+}

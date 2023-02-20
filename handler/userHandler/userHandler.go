@@ -2,6 +2,7 @@ package userHandler
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/aaguero96/technical_challenge_q2bank/service/userService"
 	"github.com/gin-gonic/gin"
@@ -25,4 +26,22 @@ func (uh userHandler) GetAll(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, users)
+}
+
+func (uh userHandler) GetById(ctx *gin.Context) {
+	paramID := ctx.Param("id")
+
+	id, err := strconv.Atoi(paramID)
+	if err != nil {
+		httputil.NewError(ctx, http.StatusBadRequest, err)
+		return
+	}
+
+	user, err := uh.userService.GetById(id)
+	if err != nil {
+		httputil.NewError(ctx, http.StatusInternalServerError, err)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, user)
 }

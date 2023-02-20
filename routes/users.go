@@ -8,5 +8,6 @@ import (
 func NewUserRoutes(rg *gin.RouterGroup, uh userHandler.UserHandler) {
 	users := rg.Group("/users")
 
+	users.GET("/:id", uh.GetById)
 	users.GET("/", uh.GetAll)
 }
