@@ -1,5 +1,5 @@
 package userTypeService
 
-type UserService interface {
+type UserTypeService interface {
 	GetAll() ([]UserTypeResponse, error)
 }
