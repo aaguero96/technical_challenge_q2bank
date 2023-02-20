@@ -3,6 +3,7 @@ package transactionService
 import (
 	"errors"
 
+	"github.com/aaguero96/technical_challenge_q2bank/events/producer"
 	"github.com/aaguero96/technical_challenge_q2bank/repository/transactionRepository"
 	"github.com/aaguero96/technical_challenge_q2bank/repository/userRepository"
 	"github.com/aaguero96/technical_challenge_q2bank/repository/walletRepository"
@@ -67,6 +68,11 @@ func (ts transactionService) CreateTransaction(payerID, payeeID int, amount floa
 	}
 
 	response := CreateTransactionModelToResponse(transaction)
+
+	err = producer.ApprovingTransactionEvent(producer.TransactionEvent(response))
+	if err != nil {
+		return CreateTransactionResponse{}, err
+	}
 
 	return response, nil
 }

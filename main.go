@@ -24,6 +24,7 @@ import (
 func init() {
 	initializers.LoadEnvVariables()
 	initializers.ConnectDB()
+	initializers.ConnectRedisClient()
 }
 
 func main() {
