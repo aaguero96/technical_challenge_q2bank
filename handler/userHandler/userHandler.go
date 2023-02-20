@@ -1,4 +1,4 @@
-package handler
+package userHandler
 
 import (
 	"net/http"
