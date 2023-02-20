@@ -4,7 +4,7 @@ import "github.com/aaguero96/technical_challenge_q2bank/models"
 
 type WalletResponse struct {
 	ID     int     `json:"id"`
-	Amount float64 `json:"type"`
+	Amount float64 `json:"amount"`
 }
 
 func GetAllModelToResponse(model []models.WalletModel) []WalletResponse {
