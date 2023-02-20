@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/gin-gonic/gin v1.8.2
 	github.com/joho/godotenv v1.5.1
+	github.com/swaggo/swag/example/celler v0.0.0-20230216124926-37f466e7e8cc
 	gorm.io/driver/postgres v1.4.8
 	gorm.io/gorm v1.24.5
 )
