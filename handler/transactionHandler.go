@@ -12,9 +12,9 @@ type transactionHandler struct {
 	transactionService transactionService.TransactionService
 }
 
-func NewTransactionHandler(transactionService transactionService.TransactionService) transactionHandler {
+func NewTransactionHandler(ts transactionService.TransactionService) transactionHandler {
 	return transactionHandler{
-		transactionService: transactionService,
+		transactionService: ts,
 	}
 }
 

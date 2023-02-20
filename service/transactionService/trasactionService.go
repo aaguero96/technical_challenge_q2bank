@@ -8,9 +8,9 @@ type transactionService struct {
 	transactionRepository transactionRepository.TransactionRepository
 }
 
-func NewTransactionService(transactionRepository transactionRepository.TransactionRepository) transactionService {
+func NewTransactionService(tr transactionRepository.TransactionRepository) transactionService {
 	return transactionService{
-		transactionRepository: transactionRepository,
+		transactionRepository: tr,
 	}
 }
 

@@ -8,9 +8,9 @@ type userTypeService struct {
 	userTypeRepository userTypeRepository.UserTypeRepository
 }
 
-func NewUserTypeService(userTypeRepository userTypeRepository.UserTypeRepository) userTypeService {
+func NewUserTypeService(utr userTypeRepository.UserTypeRepository) userTypeService {
 	return userTypeService{
-		userTypeRepository: userTypeRepository,
+		userTypeRepository: utr,
 	}
 }
 

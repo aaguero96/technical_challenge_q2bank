@@ -8,9 +8,9 @@ type walletService struct {
 	walletRepository walletRepository.WalletRepository
 }
 
-func NewWalletService(walletRepository walletRepository.WalletRepository) walletService {
+func NewWalletService(wr walletRepository.WalletRepository) walletService {
 	return walletService{
-		walletRepository: walletRepository,
+		walletRepository: wr,
 	}
 }
 

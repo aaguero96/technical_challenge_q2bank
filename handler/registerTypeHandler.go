@@ -12,9 +12,9 @@ type registerTypeHandler struct {
 	registerTypeService registerTypeService.RegisterTypeService
 }
 
-func NewRegisterTypeHandler(registerTypeService registerTypeService.RegisterTypeService) registerTypeHandler {
+func NewRegisterTypeHandler(rts registerTypeService.RegisterTypeService) registerTypeHandler {
 	return registerTypeHandler{
-		registerTypeService: registerTypeService,
+		registerTypeService: rts,
 	}
 }
 

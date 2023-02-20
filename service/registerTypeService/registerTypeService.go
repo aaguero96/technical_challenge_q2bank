@@ -6,9 +6,9 @@ type registerTypeService struct {
 	registerTypeRepository registerTypeRepository.RegisterTypeRepository
 }
 
-func NewRegisterTypeService(registerTypeRepository registerTypeRepository.RegisterTypeRepository) registerTypeService {
+func NewRegisterTypeService(rtr registerTypeRepository.RegisterTypeRepository) registerTypeService {
 	return registerTypeService{
-		registerTypeRepository: registerTypeRepository,
+		registerTypeRepository: rtr,
 	}
 }
 

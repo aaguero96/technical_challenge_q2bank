@@ -12,9 +12,9 @@ type walletHandler struct {
 	walletService walletService.WalletService
 }
 
-func NewWalletHandler(walletService walletService.WalletService) walletHandler {
+func NewWalletHandler(ws walletService.WalletService) walletHandler {
 	return walletHandler{
-		walletService: walletService,
+		walletService: ws,
 	}
 }
 

@@ -12,9 +12,9 @@ type userTypeHandler struct {
 	userTypeService userTypeService.UserTypeService
 }
 
-func NewUserTypeHandler(userTypeService userTypeService.UserTypeService) userTypeHandler {
+func NewUserTypeHandler(uts userTypeService.UserTypeService) userTypeHandler {
 	return userTypeHandler{
-		userTypeService: userTypeService,
+		userTypeService: uts,
 	}
 }
 
