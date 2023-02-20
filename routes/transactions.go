@@ -9,4 +9,5 @@ func NewTransactionRoutes(rg *gin.RouterGroup, th transactionHandler.Transaction
 	users := rg.Group("/transactions")
 
 	users.GET("/", th.GetAll)
+	users.POST("/", th.CreateTransaction)
 }

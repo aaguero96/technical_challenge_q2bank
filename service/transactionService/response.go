@@ -22,3 +22,19 @@ func GetAllModelToResponse(model []models.TransactionModel) []TransactionRespons
 	}
 	return response
 }
+
+type CreateTransactionResponse struct {
+	PayerID int     `json:"payer_id"`
+	PayeeID int     `json:"payee_id"`
+	Amount  float64 `json:"amount"`
+	Status  string  `json:"status"`
+}
+
+func CreateTransactionModelToResponse(model models.TransactionModel) CreateTransactionResponse {
+	return CreateTransactionResponse{
+		PayerID: model.PayerID,
+		PayeeID: model.PayeeID,
+		Amount:  model.Amount,
+		Status:  model.Status,
+	}
+}

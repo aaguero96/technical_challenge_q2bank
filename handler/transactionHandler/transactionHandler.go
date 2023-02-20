@@ -26,3 +26,25 @@ func (th transactionHandler) GetAll(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, transactions)
 }
+
+func (th transactionHandler) CreateTransaction(ctx *gin.Context) {
+	type request struct {
+		PayerID int     `json:"payer_id"`
+		PayeeID int     `json:"payee_id"`
+		Amount  float64 `json:"amount"`
+	}
+
+	var input request
+	if err := ctx.ShouldBindJSON(&input); err != nil {
+		httputil.NewError(ctx, http.StatusBadRequest, err)
+		return
+	}
+
+	transactions, err := th.transactionService.CreateTransaction(input.PayerID, input.PayeeID, input.Amount)
+	if err != nil {
+		httputil.NewError(ctx, http.StatusInternalServerError, err)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, transactions)
+}

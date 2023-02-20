@@ -23,3 +23,17 @@ func (tr transactionRepository) GetAll() ([]models.TransactionModel, error) {
 	}
 	return transactions, nil
 }
+
+func (tr transactionRepository) CreateTransaction(payerID, payeeID int, amount float64) (models.TransactionModel, error) {
+	transaction := models.TransactionModel{
+		PayerID: payerID,
+		PayeeID: payeeID,
+		Amount:  amount,
+		Status:  "in progress",
+	}
+	result := tr.db.Create(&transaction)
+	if result.Error != nil {
+		return models.TransactionModel{}, result.Error
+	}
+	return transaction, nil
+}
