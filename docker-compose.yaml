@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  api:
+    container_name: api
+    build: .
+    environment:
+      - REDIS_HOST=redis
+    ports:
+      - "3000:3000"
+    expose:
+      - "3000"
+    depends_on:
+      - redis
+    
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    expose:
+      - "6379"
+    
+  redis-commander:
+    container_name: redis-commander-web
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - "8081:8081"
