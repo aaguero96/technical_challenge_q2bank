@@ -23,6 +23,7 @@ func (wh walletHandler) GetAll(ctx *gin.Context) {
 	wallets, err := wh.walletService.GetAll()
 	if err != nil {
 		httputil.NewError(ctx, http.StatusInternalServerError, err)
+		return
 	}
 
 	ctx.JSON(http.StatusOK, wallets)

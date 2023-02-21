@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"errors"
 	"net/http"
 	"strings"
 
@@ -17,7 +18,7 @@ func Authorization(ctx *gin.Context) {
 		bearerToken := ctx.Request.Header.Get("Authorization")
 
 		if bearerToken == "" {
-			httputil.NewError(ctx, http.StatusUnauthorized, err)
+			httputil.NewError(ctx, http.StatusUnauthorized, errors.New("token is not in cookies and it is not in authorizarion bearer"))
 			ctx.Abort()
 			return
 		}

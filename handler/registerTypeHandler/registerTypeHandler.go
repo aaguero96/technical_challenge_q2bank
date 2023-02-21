@@ -22,6 +22,7 @@ func (rth registerTypeHandler) GetAll(ctx *gin.Context) {
 	registerTypes, err := rth.registerTypeService.GetAll()
 	if err != nil {
 		httputil.NewError(ctx, http.StatusInternalServerError, err)
+		return
 	}
 
 	ctx.JSON(http.StatusOK, registerTypes)

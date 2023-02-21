@@ -22,6 +22,7 @@ func (th transactionHandler) GetAll(ctx *gin.Context) {
 	transactions, err := th.transactionService.GetAll()
 	if err != nil {
 		httputil.NewError(ctx, http.StatusInternalServerError, err)
+		return
 	}
 
 	ctx.JSON(http.StatusOK, transactions)

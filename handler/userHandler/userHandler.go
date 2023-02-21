@@ -23,6 +23,7 @@ func (uh userHandler) GetAll(ctx *gin.Context) {
 	users, err := uh.userService.GetAll()
 	if err != nil {
 		httputil.NewError(ctx, http.StatusInternalServerError, err)
+		return
 	}
 
 	ctx.JSON(http.StatusOK, users)

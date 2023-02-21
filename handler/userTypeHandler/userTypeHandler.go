@@ -23,6 +23,7 @@ func (uth userTypeHandler) GetAll(ctx *gin.Context) {
 	userTypes, err := uth.userTypeService.GetAll()
 	if err != nil {
 		httputil.NewError(ctx, http.StatusInternalServerError, err)
+		return
 	}
 
 	ctx.JSON(http.StatusOK, userTypes)
