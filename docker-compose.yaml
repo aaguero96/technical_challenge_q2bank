@@ -6,12 +6,15 @@ services:
     build: .
     environment:
       REDIS_HOST: redis
+      DB_HOST: postgres_db
     ports:
       - "3000:3000"
     expose:
       - "3000"
     depends_on:
       - redis
+      - consumer
+      - db
     
   redis:
     image: redis:alpine
@@ -27,7 +30,7 @@ services:
     image: rediscommander/redis-commander:latest
     restart: always
     environment:
-      - REDIS_HOSTS=local:redis:6379
+      REDIS_HOSTS: local:redis:6379
     ports:
       - "8081:8081"
     
@@ -37,5 +40,20 @@ services:
     command: go run ./events/consumer/main.go
     environment:
       REDIS_HOST: redis
+      DB_HOST: postgres_db
     depends_on:
       - redis
+      - db
+    
+  db:
+    image: postgres:10.5
+    container_name: postgres_db
+    ports:
+      - "5432:5432"
+    expose:
+      - "5432"
+    tty: true
+    environment:
+      POSTGRES_USER: 'admin'
+      POSTGRES_PASSWORD: 'admin'
+      POSTGRES_DB: 'develop'
