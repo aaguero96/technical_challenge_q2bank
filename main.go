@@ -52,6 +52,8 @@ func main() {
 	router := gin.Default()
 
 	v1 := router.Group("/v1")
+
+	routes.NewLoginRoutes(v1, userHandler)
 	routes.NewUserRoutes(v1, userHandler)
 	routes.NewUserTypeRoutes(v1, userTypeHandler)
 	routes.NewRegisterTypeRoutes(v1, registerTypeHandler)
