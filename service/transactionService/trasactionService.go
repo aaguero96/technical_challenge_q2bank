@@ -43,6 +43,11 @@ func (ts transactionService) GetAll() ([]TransactionResponse, error) {
 }
 
 func (ts transactionService) CreateTransaction(payerID, payeeID int, amount float64, payerEmail string) (CreateTransactionResponse, error) {
+	// Verify if amount is more than zero
+	if amount <= 0 {
+		return CreateTransactionResponse{}, errors.New("amount has to be more than zero")
+	}
+
 	// Payer info
 	payerData, err := ts.userRepository.GetById(payerID)
 	if err != nil {
