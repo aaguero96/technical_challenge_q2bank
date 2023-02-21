@@ -1,8 +1,6 @@
 package userService
 
 import (
-	"fmt"
-
 	"github.com/aaguero96/technical_challenge_q2bank/repository/userRepository"
 	"github.com/aaguero96/technical_challenge_q2bank/utils"
 )
@@ -46,7 +44,7 @@ func (us userService) CreateUser(name, email, password string, registerNumber in
 	}
 
 	// Create JWT
-	token, err := utils.CreateJWT(fmt.Sprintf("%v", user.ID))
+	token, err := utils.CreateJWT(user.Name, user.Email, user.Password, int(user.ID))
 	if err != nil {
 		return CreateUserResponse{}, err
 	}
