@@ -6,11 +6,9 @@ import (
 
 var WalletSeeder = []models.WalletModel{
 	{
-		WalletID: 1,
-		Amount:   10000,
+		Amount: 10000,
 	},
 	{
-		WalletID: 2,
-		Amount:   20000,
+		Amount: 20000,
 	},
 }

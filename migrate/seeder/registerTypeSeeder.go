@@ -6,11 +6,9 @@ import (
 
 var RegisterTypeSeeder = []models.RegisterTypeModel{
 	{
-		RegisterTypeID: 1,
-		RegisterType:   "CPF",
+		RegisterType: "CPF",
 	},
 	{
-		RegisterTypeID: 2,
-		RegisterType:   "CNPJ2",
+		RegisterType: "CNPJ",
 	},
 }
