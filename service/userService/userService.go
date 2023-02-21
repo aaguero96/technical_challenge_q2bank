@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/aaguero96/technical_challenge_q2bank/repository/userRepository"
+	"github.com/aaguero96/technical_challenge_q2bank/utils"
 )
 
 type userService struct {
@@ -38,12 +39,20 @@ func (us userService) GetById(id int) (GetByIdResponse, error) {
 	return response, nil
 }
 
-func (us userService) CreateUser(name, email, password string, registerNumber int64, registerTypeID, userTypeID int) (string, error) {
+func (us userService) CreateUser(name, email, password string, registerNumber int64, registerTypeID, userTypeID int) (CreateUserResponse, error) {
 	user, err := us.userRepository.CreateUser(name, email, password, registerNumber, registerTypeID, userTypeID)
 	if err != nil {
-		return "", err
+		return CreateUserResponse{}, err
 	}
 
-	fmt.Println(user)
-	return "userCreated", nil
+	// Create JWT
+	token, err := utils.CreateJWT(fmt.Sprintf("%v", user.ID))
+	if err != nil {
+		return CreateUserResponse{}, err
+	}
+
+	return CreateUserResponse{
+		Token:      token,
+		ExpiringIn: "30 minutes",
+	}, nil
 }

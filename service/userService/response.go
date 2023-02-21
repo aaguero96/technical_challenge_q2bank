@@ -40,3 +40,8 @@ func GetByIdResponseModelToResponse(model models.UserModel) GetByIdResponse {
 		UserTypeID:     model.UserTypeID,
 	}
 }
+
+type CreateUserResponse struct {
+	Token      string `json:"token"`
+	ExpiringIn string `json:"expiring_in"`
+}
