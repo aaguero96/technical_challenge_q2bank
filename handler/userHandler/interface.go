@@ -6,4 +6,5 @@ type UserHandler interface {
 	GetAll(ctx *gin.Context)
 	GetById(ctx *gin.Context)
 	CreateUser(ctx *gin.Context)
+	LoginUser(ctx *gin.Context)
 }

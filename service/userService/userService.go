@@ -44,12 +44,30 @@ func (us userService) CreateUser(name, email, password string, registerNumber in
 	}
 
 	// Create JWT
-	token, err := utils.CreateJWT(user.Name, user.Email, user.Password, int(user.ID))
+	token, err := utils.CreateJWT(user.Email)
 	if err != nil {
 		return CreateUserResponse{}, err
 	}
 
 	return CreateUserResponse{
+		Token:      token,
+		ExpiringIn: "30 minutes",
+	}, nil
+}
+
+func (us userService) LoginUser(email, password string) (LoginUserResponse, error) {
+	user, err := us.userRepository.LoginUser(email, password)
+	if err != nil {
+		return LoginUserResponse{}, err
+	}
+
+	// Create JWT
+	token, err := utils.CreateJWT(user.Email)
+	if err != nil {
+		return LoginUserResponse{}, err
+	}
+
+	return LoginUserResponse{
 		Token:      token,
 		ExpiringIn: "30 minutes",
 	}, nil

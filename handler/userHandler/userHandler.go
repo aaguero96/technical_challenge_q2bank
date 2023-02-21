@@ -71,3 +71,25 @@ func (uh userHandler) CreateUser(ctx *gin.Context) {
 	ctx.SetCookie("token", response.Token, 3600, "/", "localhost", false, true)
 	ctx.JSON(http.StatusOK, response)
 }
+
+func (uh userHandler) LoginUser(ctx *gin.Context) {
+	type request struct {
+		Email    string `json:"email"`
+		Password string `json:"password"`
+	}
+
+	var input request
+	if err := ctx.ShouldBindJSON(&input); err != nil {
+		httputil.NewError(ctx, http.StatusBadRequest, err)
+		return
+	}
+
+	response, err := uh.userService.LoginUser(input.Email, input.Password)
+	if err != nil {
+		httputil.NewError(ctx, http.StatusInternalServerError, err)
+		return
+	}
+
+	ctx.SetCookie("token", response.Token, 3600, "/", "localhost", false, true)
+	ctx.JSON(http.StatusOK, response)
+}

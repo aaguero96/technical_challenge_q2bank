@@ -45,3 +45,8 @@ type CreateUserResponse struct {
 	Token      string `json:"token"`
 	ExpiringIn string `json:"expiring_in"`
 }
+
+type LoginUserResponse struct {
+	Token      string `json:"token"`
+	ExpiringIn string `json:"expiring_in"`
+}

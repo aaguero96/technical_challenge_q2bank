@@ -84,3 +84,24 @@ func (ur userRepository) CreateUser(name, email, password string, registerNumber
 
 	return newUser, nil
 }
+
+func (ur userRepository) LoginUser(email, password string) (models.UserModel, error) {
+	var user models.UserModel
+	user.Email = email
+
+	result := ur.db.Where(&user).First(&user)
+	if result.Error != nil {
+		return models.UserModel{}, result.Error
+	}
+
+	validate, err := utils.ValidatePassword(user.Password, password)
+	if err != nil {
+		return models.UserModel{}, err
+	}
+
+	if !validate {
+		return models.UserModel{}, errors.New("user is not authorized")
+	}
+
+	return user, nil
+}
