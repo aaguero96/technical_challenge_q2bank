@@ -85,7 +85,7 @@ func (tr transactionRepository) Deposit(payerID, payeeID, transactionID int, amo
 
 	// Update transaction
 	var transaction models.TransactionModel
-	result = tx.First(&transaction, transactionID)
+	result = tx.Where(&models.TransactionModel{Status: "in progress"}).First(&transaction, transactionID)
 	if result.Error != nil {
 		return result.Error
 	}
@@ -103,7 +103,7 @@ func (tr transactionRepository) Deposit(payerID, payeeID, transactionID int, amo
 
 func (tr transactionRepository) DenyTransfer(transactionID int) error {
 	var transaction models.TransactionModel
-	result := tr.db.First(&transaction, transactionID)
+	result := tr.db.Where(&models.TransactionModel{Status: "in progress"}).First(&transaction, transactionID)
 	if result.Error != nil {
 		return result.Error
 	}
