@@ -10,4 +10,5 @@ func NewUserRoutes(rg *gin.RouterGroup, uh userHandler.UserHandler) {
 
 	users.GET("/:id", uh.GetById)
 	users.GET("/", uh.GetAll)
+	users.POST("/", uh.CreateUser)
 }

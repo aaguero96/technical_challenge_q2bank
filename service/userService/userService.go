@@ -1,6 +1,8 @@
 package userService
 
 import (
+	"fmt"
+
 	"github.com/aaguero96/technical_challenge_q2bank/repository/userRepository"
 )
 
@@ -34,4 +36,14 @@ func (us userService) GetById(id int) (GetByIdResponse, error) {
 	response := GetByIdResponseModelToResponse(user)
 
 	return response, nil
+}
+
+func (us userService) CreateUser(name, email, password string, registerNumber int64, registerTypeID, userTypeID int) (string, error) {
+	user, err := us.userRepository.CreateUser(name, email, password, registerNumber, registerTypeID, userTypeID)
+	if err != nil {
+		return "", err
+	}
+
+	fmt.Println(user)
+	return "userCreated", nil
 }

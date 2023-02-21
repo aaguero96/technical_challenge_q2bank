@@ -45,3 +45,28 @@ func (uh userHandler) GetById(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, user)
 }
+
+func (uh userHandler) CreateUser(ctx *gin.Context) {
+	type request struct {
+		Name           string `json:"name"`
+		Email          string `json:"email"`
+		Password       string `json:"password"`
+		RegisterNumber int64  `json:"register_number"`
+		RegisterTypeID int    `json:"register_type_id"`
+		UserTypeID     int    `json:"user_type_id"`
+	}
+
+	var input request
+	if err := ctx.ShouldBindJSON(&input); err != nil {
+		httputil.NewError(ctx, http.StatusBadRequest, err)
+		return
+	}
+
+	user, err := uh.userService.CreateUser(input.Name, input.Email, input.Password, input.RegisterNumber, input.RegisterTypeID, input.UserTypeID)
+	if err != nil {
+		httputil.NewError(ctx, http.StatusInternalServerError, err)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, user)
+}
