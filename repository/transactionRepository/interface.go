@@ -6,4 +6,5 @@ type TransactionRepository interface {
 	GetAll() ([]models.TransactionModel, error)
 	CreateTransaction(payerID, payeeID int, amount float64) (models.TransactionModel, error)
 	Deposit(payerID, payeeID, transactionID int, amount float64) error
+	DenyTransfer(transactionID int) error
 }

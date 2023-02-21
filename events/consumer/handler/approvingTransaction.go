@@ -27,6 +27,11 @@ func ApprovingTransactionHandler(
 		fmt.Printf("It was transfered the amount of %v, from %v to %v \n", data.Amount, data.PayerID, data.PayeeID)
 		return nil
 	}
+	err = ts.DenyTransfer(data.TransactionID)
+	if err != nil {
+		fmt.Printf("error in transaction with id %v \n", data.TransactionID)
+		return err
+	}
 	fmt.Println("Have problems in aprovment")
 	return nil
 }

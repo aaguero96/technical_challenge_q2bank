@@ -100,3 +100,17 @@ func (tr transactionRepository) Deposit(payerID, payeeID, transactionID int, amo
 
 	return nil
 }
+
+func (tr transactionRepository) DenyTransfer(transactionID int) error {
+	var transaction models.TransactionModel
+	result := tr.db.First(&transaction, transactionID)
+	if result.Error != nil {
+		return result.Error
+	}
+	transaction.Status = "denied"
+	result = tr.db.Save(&transaction)
+	if result.Error != nil {
+		return result.Error
+	}
+	return nil
+}

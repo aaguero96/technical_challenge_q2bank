@@ -77,7 +77,7 @@ func (ts transactionService) CreateTransaction(payerID, payeeID int, amount floa
 	}
 
 	// Payer User Type info
-	payerUserTypeData, err := ts.userTypeRepository.GetById(payerID)
+	payerUserTypeData, err := ts.userTypeRepository.GetById(payeeData.UserTypeID)
 	if err != nil {
 		return CreateTransactionResponse{}, err
 	}
@@ -106,6 +106,15 @@ func (ts transactionService) CreateTransaction(payerID, payeeID int, amount floa
 
 func (ts transactionService) Deposit(payerID, payeeID, transactionID int, amount float64) error {
 	err := ts.transactionRepository.Deposit(payerID, payeeID, transactionID, amount)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (ts transactionService) DenyTransfer(transactionID int) error {
+	err := ts.transactionRepository.DenyTransfer(transactionID)
 	if err != nil {
 		return err
 	}
