@@ -12,10 +12,18 @@ import (
 	"github.com/aaguero96/technical_challenge_q2bank/events/producer"
 	"github.com/aaguero96/technical_challenge_q2bank/externalAPI/validator"
 	"github.com/aaguero96/technical_challenge_q2bank/initializers"
+	"github.com/aaguero96/technical_challenge_q2bank/repository/transactionRepository"
+	"github.com/aaguero96/technical_challenge_q2bank/repository/userRepository"
+	"github.com/aaguero96/technical_challenge_q2bank/repository/walletRepository"
+	"github.com/aaguero96/technical_challenge_q2bank/service/externalValidatorService"
+	"github.com/aaguero96/technical_challenge_q2bank/service/transactionService"
 	"github.com/go-redis/redis/v7"
 	"github.com/joho/godotenv"
 	uuid "github.com/satori/go.uuid"
 )
+
+var ts transactionService.TransactionService
+var evs externalValidatorService.ExternalValidatorService
 
 func init() {
 	// initializers.LoadEnvVariables()
@@ -45,7 +53,7 @@ func processStream(stream redis.XMessage, retry bool) {
 			fmt.Printf("error on unmarshal stream: %v \n", stream.ID)
 			return
 		}
-		handler.ApprovingTransactionHandler(data, validator.NewValidatorExternalAPI())
+		handler.ApprovingTransactionHandler(data, evs, ts)
 	}
 
 	initializers.Client.XAck(os.Getenv("STREAM_REDIS_NAME"), os.Getenv("CONSUMER_GROUP_REDIS_NAME"), stream.ID)
@@ -89,6 +97,15 @@ func consumeEvents() {
 // }
 
 func main() {
+	// Start Repositories
+	userRepository := userRepository.NewUserRepository(initializers.DB)
+	transactionRepository := transactionRepository.NewTransactionRepository(initializers.DB)
+	walletRepository := walletRepository.NewWalletRepository(initializers.DB)
+
+	// Start Services
+	ts = transactionService.NewTransactionService(transactionRepository, userRepository, walletRepository)
+	evs = externalValidatorService.NewExternalValidatorService(validator.NewValidatorExternalAPI())
+
 	go consumeEvents()
 
 	chanOS := make(chan os.Signal, 1)
