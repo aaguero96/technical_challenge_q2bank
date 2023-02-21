@@ -39,7 +39,7 @@ func main() {
 	userService := userService.NewUserService(userRepository)
 	userTypeService := userTypeService.NewUserTypeService(userTypeRepository)
 	registerTypeService := registerTypeService.NewRegisterTypeService(registerTypeRepository)
-	transactionService := transactionService.NewTransactionService(transactionRepository, userRepository, walletRepository)
+	transactionService := transactionService.NewTransactionService(transactionRepository, userRepository, walletRepository, userTypeRepository)
 	walletService := walletService.NewWalletService(walletRepository)
 
 	// Start Handlers

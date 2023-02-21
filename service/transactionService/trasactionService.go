@@ -6,6 +6,7 @@ import (
 	"github.com/aaguero96/technical_challenge_q2bank/events/producer"
 	"github.com/aaguero96/technical_challenge_q2bank/repository/transactionRepository"
 	"github.com/aaguero96/technical_challenge_q2bank/repository/userRepository"
+	"github.com/aaguero96/technical_challenge_q2bank/repository/userTypeRepository"
 	"github.com/aaguero96/technical_challenge_q2bank/repository/walletRepository"
 )
 
@@ -13,17 +14,20 @@ type transactionService struct {
 	transactionRepository transactionRepository.TransactionRepository
 	userRepository        userRepository.UserRepository
 	walletRepository      walletRepository.WalletRepository
+	userTypeRepository    userTypeRepository.UserTypeRepository
 }
 
 func NewTransactionService(
 	tr transactionRepository.TransactionRepository,
 	ur userRepository.UserRepository,
 	wr walletRepository.WalletRepository,
+	utr userTypeRepository.UserTypeRepository,
 ) transactionService {
 	return transactionService{
 		transactionRepository: tr,
 		userRepository:        ur,
 		walletRepository:      wr,
+		userTypeRepository:    utr,
 	}
 }
 
@@ -39,29 +43,46 @@ func (ts transactionService) GetAll() ([]TransactionResponse, error) {
 }
 
 func (ts transactionService) CreateTransaction(payerID, payeeID int, amount float64) (CreateTransactionResponse, error) {
+	// Payer info
 	payerData, err := ts.userRepository.GetById(payerID)
 	if err != nil {
 		return CreateTransactionResponse{}, err
 	}
 
+	// Payee info
 	payeeData, err := ts.userRepository.GetById(payeeID)
 	if err != nil {
 		return CreateTransactionResponse{}, err
 	}
 
+	// Verify if payeer and payee is not the same
 	if payerData.ID == payeeData.ID {
 		return CreateTransactionResponse{}, errors.New("payee and payer should be different")
 	}
 
+	// Payer wallet info
 	walletPayerData, err := ts.walletRepository.GetById(payerID)
 	if err != nil {
 		return CreateTransactionResponse{}, err
 	}
 
+	// Verify if payer has enough money
 	if walletPayerData.Amount < amount {
-		return CreateTransactionResponse{}, errors.New("payer dont have enough money")
+		return CreateTransactionResponse{}, errors.New("payer does not have enough money")
 	}
 
+	// Payer User Type info
+	payerUserTypeData, err := ts.userTypeRepository.GetById(payerID)
+	if err != nil {
+		return CreateTransactionResponse{}, err
+	}
+
+	// Verify if payer is not storekeeper
+	if payerUserTypeData.UserType == "storekeeper" {
+		return CreateTransactionResponse{}, errors.New("storekeeper has not permission to transfer money")
+	}
+
+	// Create transaction
 	transaction, err := ts.transactionRepository.CreateTransaction(payerID, payeeID, amount)
 	if err != nil {
 		return CreateTransactionResponse{}, err
@@ -69,6 +90,7 @@ func (ts transactionService) CreateTransaction(payerID, payeeID int, amount floa
 
 	response := CreateTransactionModelToResponse(transaction)
 
+	// Send transaction to queue (for aprove)
 	err = producer.ApprovingTransactionEvent(producer.TransactionEvent(response))
 	if err != nil {
 		return CreateTransactionResponse{}, err

@@ -13,6 +13,7 @@ import (
 	"github.com/aaguero96/technical_challenge_q2bank/initializers"
 	"github.com/aaguero96/technical_challenge_q2bank/repository/transactionRepository"
 	"github.com/aaguero96/technical_challenge_q2bank/repository/userRepository"
+	"github.com/aaguero96/technical_challenge_q2bank/repository/userTypeRepository"
 	"github.com/aaguero96/technical_challenge_q2bank/repository/walletRepository"
 	"github.com/aaguero96/technical_challenge_q2bank/service/externalValidatorService"
 	"github.com/aaguero96/technical_challenge_q2bank/service/transactionService"
@@ -95,9 +96,10 @@ func main() {
 	userRepository := userRepository.NewUserRepository(initializers.DB)
 	transactionRepository := transactionRepository.NewTransactionRepository(initializers.DB)
 	walletRepository := walletRepository.NewWalletRepository(initializers.DB)
+	userTypeRepository := userTypeRepository.NewUserTypeRepository(initializers.DB)
 
 	// Start Services
-	ts = transactionService.NewTransactionService(transactionRepository, userRepository, walletRepository)
+	ts = transactionService.NewTransactionService(transactionRepository, userRepository, walletRepository, userTypeRepository)
 	evs = externalValidatorService.NewExternalValidatorService(validator.NewValidatorExternalAPI())
 
 	go consumeEvents()
