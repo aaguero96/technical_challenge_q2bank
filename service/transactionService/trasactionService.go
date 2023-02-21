@@ -42,11 +42,16 @@ func (ts transactionService) GetAll() ([]TransactionResponse, error) {
 	return response, nil
 }
 
-func (ts transactionService) CreateTransaction(payerID, payeeID int, amount float64) (CreateTransactionResponse, error) {
+func (ts transactionService) CreateTransaction(payerID, payeeID int, amount float64, payerEmail string) (CreateTransactionResponse, error) {
 	// Payer info
 	payerData, err := ts.userRepository.GetById(payerID)
 	if err != nil {
 		return CreateTransactionResponse{}, err
+	}
+
+	// Verify if request payear is the same as logged
+	if payerData.Email != payerEmail {
+		return CreateTransactionResponse{}, errors.New("not authorized to do this transaction")
 	}
 
 	// Payee info

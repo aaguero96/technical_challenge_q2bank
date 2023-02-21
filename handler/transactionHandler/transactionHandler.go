@@ -35,13 +35,15 @@ func (th transactionHandler) CreateTransaction(ctx *gin.Context) {
 		Amount  float64 `json:"amount"`
 	}
 
+	payeerEmail := ctx.Request.Header.Get("email")
+
 	var input request
 	if err := ctx.ShouldBindJSON(&input); err != nil {
 		httputil.NewError(ctx, http.StatusBadRequest, err)
 		return
 	}
 
-	transactions, err := th.transactionService.CreateTransaction(input.PayerID, input.PayeeID, input.Amount)
+	transactions, err := th.transactionService.CreateTransaction(input.PayerID, input.PayeeID, input.Amount, payeerEmail)
 	if err != nil {
 		httputil.NewError(ctx, http.StatusInternalServerError, err)
 		return
