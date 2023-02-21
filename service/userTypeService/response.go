@@ -18,3 +18,15 @@ func GetAllModelToResponse(model []models.UserTypeModel) []UserTypeResponse {
 	}
 	return response
 }
+
+type GetByIdResponse struct {
+	UserTypeID int    `json:"user_type_id"`
+	UserType   string `json:"user_type"`
+}
+
+func GetByIdResponseModelToResponse(model models.UserTypeModel) GetByIdResponse {
+	return GetByIdResponse{
+		UserTypeID: model.UserTypeID,
+		UserType:   model.UserType,
+	}
+}

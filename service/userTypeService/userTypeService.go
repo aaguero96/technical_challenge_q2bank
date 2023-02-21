@@ -24,3 +24,14 @@ func (uts userTypeService) GetAll() ([]UserTypeResponse, error) {
 
 	return response, nil
 }
+
+func (uts userTypeService) GetById(id int) (GetByIdResponse, error) {
+	user, err := uts.userTypeRepository.GetById(id)
+	if err != nil {
+		return GetByIdResponse{}, err
+	}
+
+	response := GetByIdResponseModelToResponse(user)
+
+	return response, nil
+}

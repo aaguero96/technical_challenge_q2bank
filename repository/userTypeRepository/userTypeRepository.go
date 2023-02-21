@@ -23,3 +23,12 @@ func (utr userTypeRepository) GetAll() ([]models.UserTypeModel, error) {
 	}
 	return userTypes, nil
 }
+
+func (utr userTypeRepository) GetById(id int) (models.UserTypeModel, error) {
+	var userType models.UserTypeModel
+	result := utr.db.First(&userType, id)
+	if result.Error != nil {
+		return models.UserTypeModel{}, result.Error
+	}
+	return userType, nil
+}
