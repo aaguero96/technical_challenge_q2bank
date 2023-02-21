@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"os/signal"
 	"sync"
@@ -18,7 +17,6 @@ import (
 	"github.com/aaguero96/technical_challenge_q2bank/service/externalValidatorService"
 	"github.com/aaguero96/technical_challenge_q2bank/service/transactionService"
 	"github.com/go-redis/redis/v7"
-	"github.com/joho/godotenv"
 	uuid "github.com/satori/go.uuid"
 )
 
@@ -26,11 +24,7 @@ var ts transactionService.TransactionService
 var evs externalValidatorService.ExternalValidatorService
 
 func init() {
-	// initializers.LoadEnvVariables()
-	err := godotenv.Load("../../.env")
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	initializers.LoadEnvVariables()
 	initializers.ConnectDB()
 	initializers.ConnectRedisClient()
 	initializers.CreateConsumerGroup()
