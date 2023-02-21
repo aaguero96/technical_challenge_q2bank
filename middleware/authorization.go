@@ -18,6 +18,7 @@ func Authorization(ctx *gin.Context) {
 
 		if bearerToken == "" {
 			httputil.NewError(ctx, http.StatusUnauthorized, err)
+			ctx.Abort()
 			return
 		}
 
@@ -27,6 +28,7 @@ func Authorization(ctx *gin.Context) {
 	email, err := utils.DecriptJWT(token)
 	if err != nil {
 		httputil.NewError(ctx, http.StatusUnauthorized, err)
+		ctx.Abort()
 		return
 	}
 
