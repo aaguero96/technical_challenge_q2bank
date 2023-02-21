@@ -18,7 +18,7 @@ var UserSeeder = []models.UserModel{
 		Name:           "name_2_storekeeper",
 		RegisterNumber: 22222222222222,
 		RegisterTypeID: 2,
-		Email:          "email1@testmail.com",
+		Email:          "email2@testmail.com",
 		WalletID:       2,
 		UserTypeID:     2,
 		Password:       "987654321",
