@@ -62,11 +62,12 @@ func (uh userHandler) CreateUser(ctx *gin.Context) {
 		return
 	}
 
-	user, err := uh.userService.CreateUser(input.Name, input.Email, input.Password, input.RegisterNumber, input.RegisterTypeID, input.UserTypeID)
+	response, err := uh.userService.CreateUser(input.Name, input.Email, input.Password, input.RegisterNumber, input.RegisterTypeID, input.UserTypeID)
 	if err != nil {
 		httputil.NewError(ctx, http.StatusInternalServerError, err)
 		return
 	}
 
-	ctx.JSON(http.StatusOK, user)
+	ctx.SetCookie("token", response.Token, 3600, "/", "localhost", false, true)
+	ctx.JSON(http.StatusOK, response)
 }
