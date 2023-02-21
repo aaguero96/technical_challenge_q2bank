@@ -129,9 +129,19 @@ func (ts transactionService) DenyTransfer(transactionID int) error {
 
 func (ts transactionService) CancelTransaction(transactionID int, payeerEmail string) error {
 	// Verify if payeerEmail is the same as payeer transaction
-	// transfer := ts.transactionRepository.
+	transfer, err := ts.transactionRepository.GetById(transactionID)
+	if err != nil {
+		return err
+	}
+	payerData, err := ts.userRepository.GetById(transfer.PayerID)
+	if err != nil {
+		return err
+	}
+	if payerData.Email != payeerEmail {
+		return errors.New("not authorized to do this transaction")
+	}
 
-	err := ts.transactionRepository.CancelTransaction(transactionID)
+	err = ts.transactionRepository.CancelTransaction(transactionID)
 	if err != nil {
 		return err
 	}
