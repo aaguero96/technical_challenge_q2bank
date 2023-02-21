@@ -1,7 +1,7 @@
 package models
 
 type UserTypeModel struct {
-	UserTypeID int    `gorm:"column:user_type_id,primary_key"`
+	UserTypeID int    `gorm:"column:user_type_id;primaryKey"`
 	UserType   string `gorm:"column:user_type"`
 }
 
