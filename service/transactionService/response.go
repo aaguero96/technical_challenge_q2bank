@@ -40,3 +40,21 @@ func CreateTransactionModelToResponse(model models.TransactionModel) CreateTrans
 		Status:        model.Status,
 	}
 }
+
+type GetByIdResponse struct {
+	TransactionID int     `json:"transaction_id"`
+	PayerID       int     `json:"payer_id"`
+	PayeeID       int     `json:"payee_id"`
+	Amount        float64 `json:"amount"`
+	Status        string  `json:"status"`
+}
+
+func GetByIdResponseModelToResponse(model models.TransactionModel) GetByIdResponse {
+	return GetByIdResponse{
+		TransactionID: int(model.ID),
+		PayerID:       model.PayerID,
+		PayeeID:       model.PayeeID,
+		Amount:        model.Amount,
+		Status:        model.Status,
+	}
+}

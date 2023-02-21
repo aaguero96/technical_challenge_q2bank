@@ -10,6 +10,7 @@ func NewTransactionRoutes(rg *gin.RouterGroup, th transactionHandler.Transaction
 	transactions := rg.Group("/transactions")
 
 	transactions.Use(middleware.Authorization)
+	transactions.GET("/:id", th.GetById)
 	transactions.GET("/", th.GetAll)
 	transactions.POST("/", th.CreateTransaction)
 	transactions.DELETE("/:id", th.CancelTransaction)

@@ -144,3 +144,12 @@ func (tr transactionRepository) CancelTransaction(transactionID int) error {
 	}
 	return nil
 }
+
+func (tr transactionRepository) GetById(id int) (models.TransactionModel, error) {
+	var transaction models.TransactionModel
+	result := tr.db.First(&transaction, id)
+	if result.Error != nil {
+		return models.TransactionModel{}, result.Error
+	}
+	return transaction, nil
+}

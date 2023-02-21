@@ -6,4 +6,5 @@ type TransactionService interface {
 	Deposit(payerID, payeeID, transactionID int, amount float64) error
 	DenyTransfer(transactionID int) error
 	CancelTransaction(transactionID int, payeerEmail string) error
+	GetById(id int) (GetByIdResponse, error)
 }

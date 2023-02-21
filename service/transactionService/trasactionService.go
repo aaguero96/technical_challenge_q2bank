@@ -138,3 +138,14 @@ func (ts transactionService) CancelTransaction(transactionID int, payeerEmail st
 
 	return nil
 }
+
+func (ts transactionService) GetById(id int) (GetByIdResponse, error) {
+	user, err := ts.transactionRepository.GetById(id)
+	if err != nil {
+		return GetByIdResponse{}, err
+	}
+
+	response := GetByIdResponseModelToResponse(user)
+
+	return response, nil
+}

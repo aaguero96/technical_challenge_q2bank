@@ -76,3 +76,21 @@ func (th transactionHandler) CancelTransaction(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, Response{Message: "Cancel in progress"})
 }
+
+func (th transactionHandler) GetById(ctx *gin.Context) {
+	paramID := ctx.Param("id")
+
+	id, err := strconv.Atoi(paramID)
+	if err != nil {
+		httputil.NewError(ctx, http.StatusBadRequest, err)
+		return
+	}
+
+	transaction, err := th.transactionService.GetById(id)
+	if err != nil {
+		httputil.NewError(ctx, http.StatusInternalServerError, err)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, transaction)
+}
