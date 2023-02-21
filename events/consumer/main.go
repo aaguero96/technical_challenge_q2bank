@@ -10,6 +10,7 @@ import (
 
 	"github.com/aaguero96/technical_challenge_q2bank/events/consumer/handler"
 	"github.com/aaguero96/technical_challenge_q2bank/events/producer"
+	"github.com/aaguero96/technical_challenge_q2bank/externalAPI/validator"
 	"github.com/aaguero96/technical_challenge_q2bank/initializers"
 	"github.com/go-redis/redis/v7"
 	"github.com/joho/godotenv"
@@ -44,7 +45,7 @@ func processStream(stream redis.XMessage, retry bool) {
 			fmt.Printf("error on unmarshal stream: %v \n", stream.ID)
 			return
 		}
-		handler.ApprovingTransactionHandler(data)
+		handler.ApprovingTransactionHandler(data, validator.NewValidatorExternalAPI())
 	}
 
 	initializers.Client.XAck(os.Getenv("STREAM_REDIS_NAME"), os.Getenv("CONSUMER_GROUP_REDIS_NAME"), stream.ID)
