@@ -16,6 +16,11 @@ func Authorization(ctx *gin.Context) {
 	if err != nil {
 		bearerToken := ctx.Request.Header.Get("Authorization")
 
+		if bearerToken == "" {
+			httputil.NewError(ctx, http.StatusUnauthorized, err)
+			return
+		}
+
 		token = strings.Split(bearerToken, "Bearer ")[1]
 	}
 
