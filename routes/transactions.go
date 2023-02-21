@@ -6,8 +6,8 @@ import (
 )
 
 func NewTransactionRoutes(rg *gin.RouterGroup, th transactionHandler.TransactionHandler) {
-	users := rg.Group("/transactions")
+	transactions := rg.Group("/transactions")
 
-	users.GET("/", th.GetAll)
-	users.POST("/", th.CreateTransaction)
+	transactions.GET("/", th.GetAll)
+	transactions.POST("/", th.CreateTransaction)
 }

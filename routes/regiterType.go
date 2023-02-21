@@ -6,7 +6,7 @@ import (
 )
 
 func NewRegisterTypeRoutes(rg *gin.RouterGroup, rth registerTypeHandler.RegisterTypeHandler) {
-	users := rg.Group("/register_types")
+	registerTypes := rg.Group("/register_types")
 
-	users.GET("/", rth.GetAll)
+	registerTypes.GET("/", rth.GetAll)
 }

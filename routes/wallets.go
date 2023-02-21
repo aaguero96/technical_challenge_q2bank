@@ -6,8 +6,8 @@ import (
 )
 
 func NewWalletRoutes(rg *gin.RouterGroup, wh walletHandler.WalletHandler) {
-	users := rg.Group("/wallets")
+	wallets := rg.Group("/wallets")
 
-	users.GET("/:id", wh.GetById)
-	users.GET("/", wh.GetAll)
+	wallets.GET("/:id", wh.GetById)
+	wallets.GET("/", wh.GetAll)
 }
