@@ -5,7 +5,7 @@ services:
     container_name: api
     build: .
     environment:
-      - REDIS_HOST=redis
+      REDIS_HOST: redis
     ports:
       - "3000:3000"
     expose:
@@ -30,3 +30,12 @@ services:
       - REDIS_HOSTS=local:redis:6379
     ports:
       - "8081:8081"
+    
+  consumer:
+    container_name: consumer
+    build: '.'
+    command: go run ./events/consumer/main.go
+    environment:
+      REDIS_HOST: redis
+    depends_on:
+      - redis
