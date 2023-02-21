@@ -1,6 +1,8 @@
 package userService
 
 import (
+	"errors"
+
 	"github.com/aaguero96/technical_challenge_q2bank/repository/userRepository"
 	"github.com/aaguero96/technical_challenge_q2bank/utils"
 )
@@ -38,6 +40,10 @@ func (us userService) GetById(id int) (GetByIdResponse, error) {
 }
 
 func (us userService) CreateUser(name, email, password string, registerNumber int64, registerTypeID, userTypeID int) (CreateUserResponse, error) {
+	if utils.ValidateEmail(email) {
+		return CreateUserResponse{}, errors.New("email has not the correct format (eg: email@email.com)")
+	}
+
 	user, err := us.userRepository.CreateUser(name, email, password, registerNumber, registerTypeID, userTypeID)
 	if err != nil {
 		return CreateUserResponse{}, err
