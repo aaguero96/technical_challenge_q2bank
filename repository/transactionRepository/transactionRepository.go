@@ -83,13 +83,18 @@ func (tr transactionRepository) Deposit(payerID, payeeID, transactionID int, amo
 		return result.Error
 	}
 
-	// Update transaction
+	// Verify if transaction has status in progress
 	var transaction models.TransactionModel
 	result = tx.Where(&models.TransactionModel{Status: "in progress"}).First(&transaction, transactionID)
 	if result.Error != nil {
 		return result.Error
 	}
-	transaction.Status = "complete"
+	if transaction.Status != "in progress" {
+		return result.Error
+	}
+
+	// Update transaction
+	transaction.Status = "completed"
 	result = tx.Save(&transaction)
 	if result.Error != nil {
 		return result.Error
@@ -111,6 +116,31 @@ func (tr transactionRepository) DenyTransfer(transactionID int) error {
 	result = tr.db.Save(&transaction)
 	if result.Error != nil {
 		return result.Error
+	}
+	return nil
+}
+
+func (tr transactionRepository) CancelTransaction(transactionID int) error {
+	var transaction models.TransactionModel
+	result := tr.db.First(&transaction, transactionID)
+	if result.Error != nil {
+		return result.Error
+	}
+
+	if transaction.Status == "in progress" {
+		transaction.Status = "canceled"
+		result = tr.db.Save(&transaction)
+		if result.Error != nil {
+			return result.Error
+		}
+	}
+
+	if transaction.Status == "completed" {
+		transaction.Status = "cancel in progress"
+		result = tr.db.Save(&transaction)
+		if result.Error != nil {
+			return result.Error
+		}
 	}
 	return nil
 }

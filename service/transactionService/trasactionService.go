@@ -126,3 +126,15 @@ func (ts transactionService) DenyTransfer(transactionID int) error {
 
 	return nil
 }
+
+func (ts transactionService) CancelTransaction(transactionID int, payeerEmail string) error {
+	// Verify if payeerEmail is the same as payeer transaction
+	// transfer := ts.transactionRepository.
+
+	err := ts.transactionRepository.CancelTransaction(transactionID)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
