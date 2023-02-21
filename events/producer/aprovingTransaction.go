@@ -9,10 +9,11 @@ import (
 )
 
 type TransactionEvent struct {
-	PayerID int
-	PayeeID int
-	Amount  float64
-	Status  string
+	TransactionID int
+	PayerID       int
+	PayeeID       int
+	Amount        float64
+	Status        string
 }
 
 func (te *TransactionEvent) MarshalBinary() (data []byte, err error) {

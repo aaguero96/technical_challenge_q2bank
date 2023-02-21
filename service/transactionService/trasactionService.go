@@ -76,3 +76,12 @@ func (ts transactionService) CreateTransaction(payerID, payeeID int, amount floa
 
 	return response, nil
 }
+
+func (ts transactionService) Deposit(payerID, payeeID, transactionID int, amount float64) error {
+	err := ts.transactionRepository.Deposit(payerID, payeeID, transactionID, amount)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

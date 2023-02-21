@@ -4,23 +4,29 @@ import (
 	"fmt"
 
 	"github.com/aaguero96/technical_challenge_q2bank/events/producer"
-	"github.com/aaguero96/technical_challenge_q2bank/externalAPI/validator"
 	"github.com/aaguero96/technical_challenge_q2bank/service/externalValidatorService"
+	"github.com/aaguero96/technical_challenge_q2bank/service/transactionService"
 )
 
 func ApprovingTransactionHandler(
 	data producer.TransactionEvent,
-	externalValidatorAPI validator.ValidatorExternalAPI,
+	evs externalValidatorService.ExternalValidatorService,
+	ts transactionService.TransactionService,
 ) error {
-	evs := externalValidatorService.NewExternalValidatorService(externalValidatorAPI)
 	reponse, err := evs.Validator()
 	if err != nil {
 		return err
 	}
 	if reponse {
-		fmt.Printf("Foi transferido o valor de %v, de %v para %v \n", data.Amount, data.PayerID, data.PayeeID)
+		err = ts.Deposit(data.PayerID, data.PayeeID, data.TransactionID, data.Amount)
+		fmt.Println("processing...")
+		if err != nil {
+			fmt.Printf("error in transaction with id %v \n", data.TransactionID)
+			return err
+		}
+		fmt.Printf("It was transfered the amount of %v, from %v to %v \n", data.Amount, data.PayerID, data.PayeeID)
 		return nil
 	}
-	fmt.Println("Transação não foi aprovada")
+	fmt.Println("Have problems in aprovment")
 	return nil
 }

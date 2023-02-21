@@ -1,6 +1,8 @@
 package transactionRepository
 
 import (
+	"errors"
+
 	"github.com/aaguero96/technical_challenge_q2bank/models"
 	"gorm.io/gorm"
 )
@@ -36,4 +38,65 @@ func (tr transactionRepository) CreateTransaction(payerID, payeeID int, amount f
 		return models.TransactionModel{}, result.Error
 	}
 	return transaction, nil
+}
+
+func (tr transactionRepository) Deposit(payerID, payeeID, transactionID int, amount float64) error {
+	// Create transaction
+	tx := tr.db.Begin()
+
+	// Verify if payer has credit
+	var payer models.UserModel
+	result := tx.First(&payer, payerID)
+	if result.Error != nil {
+		return result.Error
+	}
+	var payerWallet models.WalletModel
+	result = tx.First(&payerWallet, payer.WalletID)
+	if result.Error != nil {
+		return result.Error
+	}
+	if payerWallet.Amount < amount {
+		return errors.New("payer dont have enought money")
+	}
+
+	// Remove amount from payer wallet
+	payerWallet.Amount -= amount
+	result = tx.Model(&models.WalletModel{}).Where("wallet_id", payer.WalletID).Update("amount", payerWallet.Amount)
+	if result.Error != nil {
+		return result.Error
+	}
+
+	// Add amount in payee wallet
+	var payee models.UserModel
+	result = tx.First(&payee, payeeID)
+	if result.Error != nil {
+		return result.Error
+	}
+	var payeeWallet models.WalletModel
+	result = tx.First(&payeeWallet, payee.WalletID)
+	if result.Error != nil {
+		return result.Error
+	}
+	payeeWallet.Amount += amount
+	result = tx.Model(&models.WalletModel{}).Where("wallet_id", payee.WalletID).Update("amount", payeeWallet.Amount)
+	if result.Error != nil {
+		return result.Error
+	}
+
+	// Update transaction
+	var transaction models.TransactionModel
+	result = tx.First(&transaction, transactionID)
+	if result.Error != nil {
+		return result.Error
+	}
+	transaction.Status = "complete"
+	result = tx.Save(&transaction)
+	if result.Error != nil {
+		return result.Error
+	}
+
+	// End Transaction
+	tx.Commit()
+
+	return nil
 }
