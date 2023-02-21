@@ -10,6 +10,7 @@ type UserModel struct {
 	Email          string `gorm:"column:email"`
 	WalletID       int    `gorm:"column:wallet_id"`
 	UserTypeID     int    `gorm:"column:user_type_id"`
+	Password       string `gorm:"password"`
 }
 
 func (UserModel) TableName() string {

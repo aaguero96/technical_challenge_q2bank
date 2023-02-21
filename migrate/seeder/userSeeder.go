@@ -12,6 +12,7 @@ var UserSeeder = []models.UserModel{
 		Email:          "email1@testmail.com",
 		WalletID:       1,
 		UserTypeID:     1,
+		Password:       "123456789",
 	},
 	{
 		Name:           "name_2_storekeeper",
@@ -20,5 +21,6 @@ var UserSeeder = []models.UserModel{
 		Email:          "email1@testmail.com",
 		WalletID:       2,
 		UserTypeID:     2,
+		Password:       "987654321",
 	},
 }
