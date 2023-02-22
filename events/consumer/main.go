@@ -51,6 +51,15 @@ func processStream(stream redis.XMessage, retry bool) {
 		handler.ApprovingTransactionHandler(data, evs, ts)
 	}
 
+	if typeEvent == "canceling_transaction" {
+		var data producer.TransactionCancelEvent
+		if err := data.UnmarshalBinary(dataBin); err != nil {
+			fmt.Printf("error on unmarshal stream: %v \n", stream.ID)
+			return
+		}
+		handler.CancelingTransactionHandler(data, ts)
+	}
+
 	initializers.Client.XAck(os.Getenv("STREAM_REDIS_NAME"), os.Getenv("CONSUMER_GROUP_REDIS_NAME"), stream.ID)
 }
 

@@ -141,7 +141,19 @@ func (ts transactionService) CancelTransaction(transactionID int, payeerEmail st
 		return errors.New("not authorized to do this transaction")
 	}
 
-	err = ts.transactionRepository.CancelTransaction(transactionID)
+	status, err := ts.transactionRepository.CancelTransaction(transactionID)
+	if err != nil {
+		return err
+	}
+
+	// Send transaction to queue (for aprove)
+	err = producer.ApprovingTransactionEvent(producer.TransactionEvent{
+		TransactionID: int(transfer.ID),
+		PayerID:       transfer.PayerID,
+		PayeeID:       transfer.PayeeID,
+		Amount:        transfer.Amount,
+		Status:        status,
+	})
 	if err != nil {
 		return err
 	}

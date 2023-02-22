@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/aaguero96/technical_challenge_q2bank/events/producer"
@@ -17,9 +18,12 @@ func ApprovingTransactionHandler(
 	if err != nil {
 		return err
 	}
+	fmt.Println("processing...")
+	if data.Status != "in progress" {
+		return errors.New("transaction already be canceled")
+	}
 	if reponse {
 		err = ts.Deposit(data.PayerID, data.PayeeID, data.TransactionID, data.Amount)
-		fmt.Println("processing...")
 		if err != nil {
 			fmt.Printf("error in transaction with id %v \n", data.TransactionID)
 			return err

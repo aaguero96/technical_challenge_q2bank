@@ -120,18 +120,18 @@ func (tr transactionRepository) DenyTransfer(transactionID int) error {
 	return nil
 }
 
-func (tr transactionRepository) CancelTransaction(transactionID int) error {
+func (tr transactionRepository) CancelTransaction(transactionID int) (string, error) {
 	var transaction models.TransactionModel
 	result := tr.db.First(&transaction, transactionID)
 	if result.Error != nil {
-		return result.Error
+		return "", result.Error
 	}
 
 	if transaction.Status == "in progress" {
 		transaction.Status = "canceled"
 		result = tr.db.Save(&transaction)
 		if result.Error != nil {
-			return result.Error
+			return "", result.Error
 		}
 	}
 
@@ -139,10 +139,10 @@ func (tr transactionRepository) CancelTransaction(transactionID int) error {
 		transaction.Status = "cancel in progress"
 		result = tr.db.Save(&transaction)
 		if result.Error != nil {
-			return result.Error
+			return "", result.Error
 		}
 	}
-	return nil
+	return transaction.Status, nil
 }
 
 func (tr transactionRepository) GetById(id int) (models.TransactionModel, error) {
