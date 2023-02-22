@@ -3,7 +3,6 @@ package walletService
 import (
 	"testing"
 
-	"github.com/aaguero96/technical_challenge_q2bank/models"
 	"github.com/aaguero96/technical_challenge_q2bank/repository/walletRepository"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -115,7 +114,7 @@ func TestUnitAddAmount(t *testing.T) {
 		increaseAmount float64
 	}
 	type Response struct {
-		wallet models.WalletModel
+		wallet AddAmountResponse
 		err    error
 	}
 
@@ -137,7 +136,7 @@ func TestUnitAddAmount(t *testing.T) {
 				increaseAmount: 234,
 			},
 			expect: Response{
-				wallet: models.WalletModel{WalletID: 1, Amount: 1234},
+				wallet: AddAmountResponse{WalletID: 1, Amount: 1234},
 				err:    nil,
 			},
 		},

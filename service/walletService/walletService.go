@@ -1,7 +1,6 @@
 package walletService
 
 import (
-	"github.com/aaguero96/technical_challenge_q2bank/models"
 	"github.com/aaguero96/technical_challenge_q2bank/repository/walletRepository"
 )
 
@@ -37,11 +36,13 @@ func (ws walletService) GetById(id int) (GetByIdResponse, error) {
 	return response, nil
 }
 
-func (ws walletService) AddAmount(walletID int, increaseAmount float64) (models.WalletModel, error) {
+func (ws walletService) AddAmount(walletID int, increaseAmount float64) (AddAmountResponse, error) {
 	wallet, err := ws.walletRepository.AddAmount(walletID, increaseAmount)
 	if err != nil {
-		return models.WalletModel{}, err
+		return AddAmountResponse{}, err
 	}
 
-	return wallet, nil
+	response := AddAmountModelToResponse(wallet)
+
+	return response, nil
 }

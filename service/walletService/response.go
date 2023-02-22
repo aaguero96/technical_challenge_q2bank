@@ -30,3 +30,15 @@ func GetByIdModelToResponse(model models.WalletModel) GetByIdResponse {
 		Amount:   model.Amount,
 	}
 }
+
+type AddAmountResponse struct {
+	WalletID int     `json:"wallet_id"`
+	Amount   float64 `json:"amount"`
+}
+
+func AddAmountModelToResponse(model models.WalletModel) AddAmountResponse {
+	return AddAmountResponse{
+		WalletID: model.WalletID,
+		Amount:   model.Amount,
+	}
+}
