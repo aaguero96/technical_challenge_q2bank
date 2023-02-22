@@ -147,7 +147,7 @@ func (ts transactionService) CancelTransaction(transactionID int, payeerEmail st
 	}
 
 	// Send transaction to queue (for aprove)
-	err = producer.ApprovingTransactionEvent(producer.TransactionEvent{
+	err = producer.CancelingTransactionEvent(producer.TransactionCancelEvent{
 		TransactionID: int(transfer.ID),
 		PayerID:       transfer.PayerID,
 		PayeeID:       transfer.PayeeID,

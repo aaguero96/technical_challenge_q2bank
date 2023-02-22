@@ -24,7 +24,7 @@ func (tce *TransactionCancelEvent) UnmarshalBinary(data []byte) error {
 	return msgpack.Unmarshal(data, tce)
 }
 
-func CancelingTransactionEvent(transaction TransactionEvent) error {
+func CancelingTransactionEvent(transaction TransactionCancelEvent) error {
 	_, err := initializers.Client.XAdd(&redis.XAddArgs{
 		Stream: os.Getenv("STREAM_REDIS_NAME"),
 		Values: map[string]interface{}{
