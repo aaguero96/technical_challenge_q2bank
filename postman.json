@@ -12,11 +12,21 @@
 				{
 					"name": "Login User",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhZXlhRGx4VTBPWTNGS1lIeWc3NXA3QnJUZkkzS0pOU1E1Q1JGYXFfc2E0In0.eyJleHAiOjE2Njg3MTEwMDIsImlhdCI6MTY2ODcwNzQwNCwiYXV0aF90aW1lIjoxNjY4NzA3NDAyLCJqdGkiOiJlNDJlYzcxZi0wMGZmLTRlMzMtOGQzYS0xN2I5ZWUwZjg3YTMiLCJpc3MiOiJodHRwczovL3N0YWdpbmcuaWQuaW50ZXJuYWwua2xldmVyLmlvL2F1dGgvcmVhbG1zL2tiLWFkbWluIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6ImQ3N2VhYmJjLTNjNGQtNDZjZi05ZDg4LWI0YTE1NzQ2MWNlNyIsInR5cCI6IkJlYXJlciIsImF6cCI6IndlYiIsIm5vbmNlIjoiYTg0NjkyMmMtZDAyMi00MGVhLWJhOWYtNWFkOGFkZmY4NjE1Iiwic2Vzc2lvbl9zdGF0ZSI6ImFiZDY2N2M2LTY2MWMtNGUwMy1hMGQzLTBlYjkzYjY2Mzk5NyIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy1rYi1hZG1pbiIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIiwic2lkIjoiYWJkNjY3YzYtNjYxYy00ZTAzLWEwZDMtMGViOTNiNjYzOTk3IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJZdXJpIEdhZ2FyaW4iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ5dXJpdkBrbGV2ZXIuaW8iLCJnaXZlbl9uYW1lIjoiWXVyaSIsImZhbWlseV9uYW1lIjoiR2FnYXJpbiIsImVtYWlsIjoieXVyaXZAa2xldmVyLmlvIn0.L1GixF6z11JZt1wfhph_n5hF0GmRYKsbwwrBAmnNdqJw3jyryfexQq-CMzNMZaPmNJxg7UlWJ9nlhfTQuErgOWS0Mf75U2muILNe9S6SlxU11k1_RG_8bzV7eqhBjsm5nmTSdt7sQ3x34aMKtIsKjO3kSZ8MXAktDDn53hlWFrt4kadgRdCQTl-7vdMkg3pZuQyapVLoT3cQo0GZSKTS4Q9bosPcImS_vPg6WFY9ltrjEN_jf76xoQCQeCt8MQurbELMtaFRobXwM5EkOuabh2zJzIhohcGDSvf1CBHos0p6jGam91KJTFKMe4Y8X4Q9Fq3Zd3VfeP11E2eAaWS-sw",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"\",\n    \"password\": \"\"\n}"
+							"raw": "{\n    \"email\": \"email2@testmail.com\",\n    \"password\": \"Def4!t*2\"\n}"
 						},
 						"url": {
 							"raw": "{{host}}/login",
@@ -38,6 +48,16 @@
 				{
 					"name": "Get All",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJlbWFpbCI6ImVtYWlsMkB0ZXN0bWFpbC5jb20iLCJleHAiOjE2NzcwOTI3Mjd9.kjkJgZpV929NnlGxvFU9cFT_DavMHqwZ0s1UIOyeC10",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -51,6 +71,29 @@
 						}
 					},
 					"response": []
+				}
+			],
+			"auth": {
+				"type": "basic"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
@@ -75,13 +118,37 @@
 					"response": []
 				},
 				{
+					"name": "Get by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/transactions/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"transactions",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create Transaction",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"payer_id\": \"\",\n    \"payee_id\": \"\",\n    \"amount\": \"\"\n}"
+							"raw": "{\n    \"payer_id\": 2,\n    \"payee_id\": 1,\n    \"amount\": 90\n}"
 						},
 						"url": {
 							"raw": "{{host}}/transactions",
@@ -90,6 +157,34 @@
 							],
 							"path": [
 								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Transaction",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/transactions/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"transactions",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
 							]
 						}
 					},
@@ -134,7 +229,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "2"
+									"value": "3"
 								}
 							]
 						}
@@ -148,7 +243,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"\",\n    \"email\": \"\",\n    \"password\": \"\",\n    \"register_number\": \"\",\n    \"register_type_id\": \"\",\n    \"user_type_id\": \"\"\n}"
+							"raw": "{\n    \"name\": \"andre aguero\",\n    \"email\": \"andre@teste.com\",\n    \"password\": \"Def4!t*0\",\n    \"register_number\": 12345678900,\n    \"register_type_id\": 1,\n    \"user_type_id\": 1\n}"
 						},
 						"url": {
 							"raw": "{{host}}/users",
@@ -247,7 +342,50 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "1"
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add amount",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": 10000\n}"
+						},
+						"url": {
+							"raw": "{{host}}/wallets/:id",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"wallets",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "3"
 								}
 							]
 						}
