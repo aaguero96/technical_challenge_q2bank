@@ -82,7 +82,7 @@ func (ts transactionService) CreateTransaction(payerID, payeeID int, amount floa
 	}
 
 	// Payer User Type info
-	payerUserTypeData, err := ts.userTypeRepository.GetById(payeeData.UserTypeID)
+	payerUserTypeData, err := ts.userTypeRepository.GetById(payerData.UserTypeID)
 	if err != nil {
 		return CreateTransactionResponse{}, err
 	}
