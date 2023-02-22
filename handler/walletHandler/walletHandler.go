@@ -70,12 +70,13 @@ func (wh walletHandler) GetById(ctx *gin.Context) {
 }
 
 // AddAmount						godoc
+// @Security 						BasicAuth
 // @Summary							Add amount in wallet
 // @Description 				Add amount or descrease amount (in case of negative amount) in wallet (only for admin in moment)
 // @Produce 						json
 // @Tags 								wallet
 // @Param   						id path int true "wallet id"
-// @Param   						amount body int true "Amount"
+// @Param   						amount body AddAmountRequest true "Amount"
 // @Router							/v1/wallets/{id} [patch]
 // @Success							200 {object} models.WalletModel
 // @Success							400 {error} error

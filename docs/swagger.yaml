@@ -1,5 +1,12 @@
 basePath: /
 definitions:
+  models.WalletModel:
+    properties:
+      amount:
+        type: number
+      walletID:
+        type: integer
+    type: object
   registerTypeService.RegisterTypeResponse:
     properties:
       id:
@@ -126,6 +133,11 @@ definitions:
         type: integer
       type:
         type: string
+    type: object
+  walletHandler.AddAmountRequest:
+    properties:
+      amount:
+        type: number
     type: object
   walletService.WalletResponse:
     properties:
@@ -473,7 +485,48 @@ paths:
       summary: Get wallet by id
       tags:
       - wallet
+    patch:
+      description: Add amount or descrease amount (in case of negative amount) in
+        wallet (only for admin in moment)
+      parameters:
+      - description: wallet id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Amount
+        in: body
+        name: amount
+        required: true
+        schema:
+          $ref: '#/definitions/walletHandler.AddAmountRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.WalletModel'
+        "400":
+          description: Bad Request
+          schema:
+            type: error
+        "401":
+          description: Unauthorized
+          schema:
+            type: error
+        "500":
+          description: Internal Server Error
+          schema:
+            type: error
+      security:
+      - BasicAuth: []
+      summary: Add amount in wallet
+      tags:
+      - wallet
 securityDefinitions:
+  BasicAuth:
+    type: basic
   BearerToken:
     in: header
     name: Authorization

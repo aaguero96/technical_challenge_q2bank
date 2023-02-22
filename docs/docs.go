@@ -538,10 +538,80 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "patch": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    }
+                ],
+                "description": "Add amount or descrease amount (in case of negative amount) in wallet (only for admin in moment)",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "wallet"
+                ],
+                "summary": "Add amount in wallet",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "wallet id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Amount",
+                        "name": "amount",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/walletHandler.AddAmountRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.WalletModel"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "error"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "error"
+                        }
+                    }
+                }
             }
         }
     },
     "definitions": {
+        "models.WalletModel": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "number"
+                },
+                "walletID": {
+                    "type": "integer"
+                }
+            }
+        },
         "registerTypeService.RegisterTypeResponse": {
             "type": "object",
             "properties": {
@@ -739,6 +809,14 @@ const docTemplate = `{
                 }
             }
         },
+        "walletHandler.AddAmountRequest": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "number"
+                }
+            }
+        },
         "walletService.WalletResponse": {
             "type": "object",
             "properties": {
@@ -752,6 +830,9 @@ const docTemplate = `{
         }
     },
     "securityDefinitions": {
+        "BasicAuth": {
+            "type": "basic"
+        },
         "BearerToken": {
             "type": "apiKey",
             "name": "Authorization",

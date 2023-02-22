@@ -38,6 +38,9 @@ func init() {
 // @securityDefinitions.apikey BearerToken
 // @in header
 // @name Authorization
+// @securityDefinitions.basic BasicAuth
+// @in header
+// @name Admin Authorization
 func main() {
 	// Start Repositories
 	userRepository := userRepository.NewUserRepository(initializers.DB)
