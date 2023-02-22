@@ -12,6 +12,10 @@ func CancelingTransactionHandler(
 	ts transactionService.TransactionService,
 ) error {
 	fmt.Println("processing...")
+	if data.Status == "canceled" {
+		fmt.Println("transaction was canceled")
+		return nil
+	}
 	err := ts.Return(data.PayerID, data.PayeeID, data.TransactionID, data.Amount, data.Status)
 	if err != nil {
 		fmt.Printf("error when canceling transaction with id %v \n", data.TransactionID)
