@@ -18,8 +18,13 @@ func ApprovingTransactionHandler(
 	if err != nil {
 		return err
 	}
+
+	transaction, err := ts.GetById(data.TransactionID)
+	if err != nil {
+		return err
+	}
 	fmt.Println("processing...")
-	if data.Status != "in progress" {
+	if transaction.Status != "in progress" {
 		return errors.New("transaction already be canceled")
 	}
 	if reponse {
