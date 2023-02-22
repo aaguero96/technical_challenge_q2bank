@@ -12,7 +12,7 @@ func NewRegisterTypeService(rtr registerTypeRepository.RegisterTypeRepository) r
 	}
 }
 
-func (rts registerTypeService) GetAll() ([]RegiterTypeResponse, error) {
+func (rts registerTypeService) GetAll() ([]RegisterTypeResponse, error) {
 	registerTypes, err := rts.registerTypeRepository.GetAll()
 	if err != nil {
 		return nil, err
