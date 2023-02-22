@@ -11,4 +11,5 @@ re-run:
 	docker-compose down
 	docker image rm technical_challenge_q2bank-consumer
 	docker image rm technical_challenge_q2bank-api
+	docker image rm technical_challenge_q2bank-migrate
 	docker-compose up
