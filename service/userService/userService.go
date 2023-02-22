@@ -40,6 +40,12 @@ func (us userService) GetById(id int) (GetByIdResponse, error) {
 }
 
 func (us userService) CreateUser(name, email, password string, registerNumber int64, registerTypeID, userTypeID int) (CreateUserResponse, error) {
+	// Validate Password
+	if errorMessage, ok := utils.ValidatePasswordFormat(password); !ok {
+		return CreateUserResponse{}, errors.New(errorMessage)
+	}
+
+	// Validate Email
 	if !utils.ValidateEmail(email) {
 		return CreateUserResponse{}, errors.New("email has not the correct format (eg: email@email.com)")
 	}
