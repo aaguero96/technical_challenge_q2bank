@@ -19,6 +19,15 @@ func NewWalletHandler(ws walletService.WalletService) walletHandler {
 	}
 }
 
+// GetAll							godoc
+// @Security 					BearerToken
+// @Summary						Get all wallets
+// @Description 			Get all wallets
+// @Produce 					json
+// @Tags 							wallet
+// @Router						/v1/wallets [get]
+// @Success						200 {object} []walletService.WalletResponse
+// @Success						500 {error} error
 func (wh walletHandler) GetAll(ctx *gin.Context) {
 	wallets, err := wh.walletService.GetAll()
 	if err != nil {
@@ -29,6 +38,17 @@ func (wh walletHandler) GetAll(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, wallets)
 }
 
+// GetById							godoc
+// @Security 						BearerToken
+// @Summary							Get wallet by id
+// @Description 				Get wallet by id
+// @Produce 						json
+// @Tags 								wallet
+// @Param   						id path int true "wallet id"
+// @Router							/v1/wallets/{id} [get]
+// @Success							200 {object} userTypeService.GetByIdResponse
+// @Success							400 {error} error
+// @Success							500 {error} error
 func (wh walletHandler) GetById(ctx *gin.Context) {
 	paramID := ctx.Param("id")
 
@@ -38,11 +58,11 @@ func (wh walletHandler) GetById(ctx *gin.Context) {
 		return
 	}
 
-	user, err := wh.walletService.GetById(id)
+	wallet, err := wh.walletService.GetById(id)
 	if err != nil {
 		httputil.NewError(ctx, http.StatusInternalServerError, err)
 		return
 	}
 
-	ctx.JSON(http.StatusOK, user)
+	ctx.JSON(http.StatusOK, wallet)
 }

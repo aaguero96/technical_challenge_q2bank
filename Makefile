@@ -17,3 +17,7 @@ re-run:
 # Test files
 unit-test:
 	go test ./service/... 
+
+# Generate swagger file
+generate-swagger:
+	swag init

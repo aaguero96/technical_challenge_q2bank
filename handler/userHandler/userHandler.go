@@ -19,6 +19,15 @@ func NewUserHandler(us userService.UserService) userHandler {
 	}
 }
 
+// GetAll							godoc
+// @Security 					BearerToken
+// @Summary						Get all users
+// @Description 			Get all users
+// @Produce 					json
+// @Tags 							user
+// @Router						/v1/users [get]
+// @Success						200 {object} []userService.UserResponse
+// @Success						500 {error} error
 func (uh userHandler) GetAll(ctx *gin.Context) {
 	users, err := uh.userService.GetAll()
 	if err != nil {
@@ -29,6 +38,17 @@ func (uh userHandler) GetAll(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, users)
 }
 
+// GetById							godoc
+// @Security 						BearerToken
+// @Summary							Get users by id
+// @Description 				Get users by id
+// @Produce 						json
+// @Tags 								user
+// @Param   						id path int true "user id"
+// @Router							/v1/users/{id} [get]
+// @Success							200 {object} userService.GetByIdResponse
+// @Success							400 {error} error
+// @Success							500 {error} error
 func (uh userHandler) GetById(ctx *gin.Context) {
 	paramID := ctx.Param("id")
 
@@ -47,17 +67,18 @@ func (uh userHandler) GetById(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, user)
 }
 
+// CreateUser						godoc
+// @Summary							Create user
+// @Description 				Create user
+// @Produce 						json
+// @Tags 								user
+// @Param   						user body CreateUserRequest true "User data"
+// @Router							/v1/users [post]
+// @Success							200 {object} userService.CreateUserResponse
+// @Success							400 {error} error
+// @Success							500 {error} error
 func (uh userHandler) CreateUser(ctx *gin.Context) {
-	type request struct {
-		Name           string `json:"name"`
-		Email          string `json:"email"`
-		Password       string `json:"password"`
-		RegisterNumber int64  `json:"register_number"`
-		RegisterTypeID int    `json:"register_type_id"`
-		UserTypeID     int    `json:"user_type_id"`
-	}
-
-	var input request
+	var input CreateUserRequest
 	if err := ctx.ShouldBindJSON(&input); err != nil {
 		httputil.NewError(ctx, http.StatusBadRequest, err)
 		return
@@ -73,13 +94,18 @@ func (uh userHandler) CreateUser(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, response)
 }
 
+// CreateUser						godoc
+// @Summary							Create user
+// @Description 				Create user
+// @Produce 						json
+// @Tags 								login
+// @Param   						user body LoginRequest true "User credencial"
+// @Router							/v1/login [post]
+// @Success							200 {object} userService.LoginUserResponse
+// @Success							400 {error} error
+// @Success							500 {error} error
 func (uh userHandler) LoginUser(ctx *gin.Context) {
-	type request struct {
-		Email    string `json:"email"`
-		Password string `json:"password"`
-	}
-
-	var input request
+	var input LoginRequest
 	if err := ctx.ShouldBindJSON(&input); err != nil {
 		httputil.NewError(ctx, http.StatusBadRequest, err)
 		return
