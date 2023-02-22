@@ -171,3 +171,12 @@ func (ts transactionService) GetById(id int) (GetByIdResponse, error) {
 
 	return response, nil
 }
+
+func (ts transactionService) Return(payerID, payeeID, transactionID int, amount float64, status string) error {
+	err := ts.transactionRepository.Return(payerID, payeeID, transactionID, amount, status)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

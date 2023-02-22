@@ -153,3 +153,70 @@ func (tr transactionRepository) GetById(id int) (models.TransactionModel, error)
 	}
 	return transaction, nil
 }
+
+func (tr transactionRepository) Return(payerID, payeeID, transactionID int, amount float64, status string) error {
+	// If is canceled nothing happen
+	if status == "canceled" {
+		return nil
+	}
+
+	// // If is in progress amount will be returned
+	// Create transaction
+	tx := tr.db.Begin()
+
+	// Verify if payee has credit
+	var payee models.UserModel
+	result := tx.First(&payee, payeeID)
+	if result.Error != nil {
+		return result.Error
+	}
+	var payeeWallet models.WalletModel
+	result = tx.First(&payeeWallet, payee.WalletID)
+	if result.Error != nil {
+		return result.Error
+	}
+	if payeeWallet.Amount < amount {
+		return errors.New("payee dont have enought money to return")
+	}
+
+	// Remove amount from payer wallet
+	payeeWallet.Amount -= amount
+	result = tx.Model(&models.WalletModel{}).Where("wallet_id", payee.WalletID).Update("amount", payeeWallet.Amount)
+	if result.Error != nil {
+		return result.Error
+	}
+
+	// Add amount in payer wallet
+	var payer models.UserModel
+	result = tx.First(&payer, payerID)
+	if result.Error != nil {
+		return result.Error
+	}
+	var payerWallet models.WalletModel
+	result = tx.First(&payerWallet, payer.WalletID)
+	if result.Error != nil {
+		return result.Error
+	}
+	payerWallet.Amount += amount
+	result = tx.Model(&models.WalletModel{}).Where("wallet_id", payer.WalletID).Update("amount", payerWallet.Amount)
+	if result.Error != nil {
+		return result.Error
+	}
+
+	// Update transaction
+	var transaction models.TransactionModel
+	result = tx.Where(&models.TransactionModel{Status: "cancel in progress"}).First(&transaction, transactionID)
+	if result.Error != nil {
+		return result.Error
+	}
+	transaction.Status = "canceled"
+	result = tx.Save(&transaction)
+	if result.Error != nil {
+		return result.Error
+	}
+
+	// End Transaction
+	tx.Commit()
+
+	return nil
+}
