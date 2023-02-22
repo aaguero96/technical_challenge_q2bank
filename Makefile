@@ -13,3 +13,7 @@ re-run:
 	docker image rm technical_challenge_q2bank-api
 	docker image rm technical_challenge_q2bank-migrate
 	docker-compose up
+
+# Test files
+unit-test:
+	go test ./service/... 
