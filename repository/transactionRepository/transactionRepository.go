@@ -127,6 +127,21 @@ func (tr transactionRepository) CancelTransaction(transactionID int) (string, er
 		return "", result.Error
 	}
 
+	// Verify if payee has necessary amount to retun
+	var payeeData models.UserModel
+	result = tr.db.First(&payeeData, transaction.PayeeID)
+	if result.Error != nil {
+		return "", result.Error
+	}
+	var payeeWalletData models.WalletModel
+	result = tr.db.First(&payeeWalletData, payeeData.WalletID)
+	if result.Error != nil {
+		return "", result.Error
+	}
+	if payeeWalletData.Amount < transaction.Amount {
+		return "", errors.New("payee has not necessary amount to return please contact phone... to more info")
+	}
+
 	if transaction.Status == "in progress" {
 		transaction.Status = "canceled"
 		result = tr.db.Save(&transaction)
