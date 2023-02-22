@@ -29,5 +29,5 @@ func (wrm walletRepositoryMock) GetById(id int) (models.WalletModel, error) {
 			return wallet, nil
 		}
 	}
-	return models.WalletModel{}, errors.New("customer not found")
+	return models.WalletModel{}, errors.New("wallet not found")
 }
