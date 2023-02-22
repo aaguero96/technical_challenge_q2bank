@@ -60,6 +60,11 @@ const docTemplate = `{
         },
         "/v1/register_types": {
             "get": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Get all register types",
                 "produces": [
                     "application/json"
@@ -89,6 +94,11 @@ const docTemplate = `{
         },
         "/v1/transactions": {
             "get": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Get all transactions",
                 "produces": [
                     "application/json"
@@ -116,6 +126,11 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Create transaction and send to redis queue to be aproved",
                 "produces": [
                     "application/json"
@@ -159,6 +174,11 @@ const docTemplate = `{
         },
         "/v1/transactions/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Get transaction by id",
                 "produces": [
                     "application/json"
@@ -198,6 +218,11 @@ const docTemplate = `{
                 }
             },
             "delete": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Cancel transaction and send to redis queue to be aproved",
                 "produces": [
                     "application/json"
@@ -236,6 +261,11 @@ const docTemplate = `{
         },
         "/v1/user_types": {
             "get": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Get all user types",
                 "produces": [
                     "application/json"
@@ -265,6 +295,11 @@ const docTemplate = `{
         },
         "/v1/user_types/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Get user type by id",
                 "produces": [
                     "application/json"
@@ -306,6 +341,11 @@ const docTemplate = `{
         },
         "/v1/users": {
             "get": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Get all users",
                 "produces": [
                     "application/json"
@@ -376,6 +416,11 @@ const docTemplate = `{
         },
         "/v1/users/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Get users by id",
                 "produces": [
                     "application/json"
@@ -417,6 +462,11 @@ const docTemplate = `{
         },
         "/v1/wallets": {
             "get": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Get all wallets",
                 "produces": [
                     "application/json"
@@ -446,6 +496,11 @@ const docTemplate = `{
         },
         "/v1/wallets/{id}": {
             "get": {
+                "security": [
+                    {
+                        "BearerToken": []
+                    }
+                ],
                 "description": "Get wallet by id",
                 "produces": [
                     "application/json"
@@ -694,6 +749,13 @@ const docTemplate = `{
                     "type": "integer"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "BearerToken": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }`

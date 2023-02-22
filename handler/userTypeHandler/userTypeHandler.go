@@ -20,6 +20,7 @@ func NewUserTypeHandler(uts userTypeService.UserTypeService) userTypeHandler {
 }
 
 // GetAll							godoc
+// @Security 					BearerToken
 // @Summary						Get all user types
 // @Description 			Get all user types
 // @Produce 					json
@@ -38,6 +39,7 @@ func (uth userTypeHandler) GetAll(ctx *gin.Context) {
 }
 
 // GetById							godoc
+// @Security 						BearerToken
 // @Summary							Get user type by id
 // @Description 				Get user type by id
 // @Produce 						json

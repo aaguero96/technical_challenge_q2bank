@@ -20,6 +20,7 @@ func NewUserHandler(us userService.UserService) userHandler {
 }
 
 // GetAll							godoc
+// @Security 					BearerToken
 // @Summary						Get all users
 // @Description 			Get all users
 // @Produce 					json
@@ -38,6 +39,7 @@ func (uh userHandler) GetAll(ctx *gin.Context) {
 }
 
 // GetById							godoc
+// @Security 						BearerToken
 // @Summary							Get users by id
 // @Description 				Get users by id
 // @Produce 						json

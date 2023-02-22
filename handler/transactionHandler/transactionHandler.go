@@ -22,6 +22,7 @@ func NewTransactionHandler(ts transactionService.TransactionService) transaction
 }
 
 // GetAll							godoc
+// @Security 					BearerToken
 // @Summary						Get all transactions
 // @Description 			Get all transactions
 // @Produce 					json
@@ -40,6 +41,7 @@ func (th transactionHandler) GetAll(ctx *gin.Context) {
 }
 
 // CreateTransaction		godoc
+// @Security 						BearerToken
 // @Summary							Create transaction
 // @Description 				Create transaction and send to redis queue to be aproved
 // @Produce 						json
@@ -68,6 +70,7 @@ func (th transactionHandler) CreateTransaction(ctx *gin.Context) {
 }
 
 // CancelTransaction		godoc
+// @Security 						BearerToken
 // @Summary							Cancel transaction
 // @Description 				Cancel transaction and send to redis queue to be aproved
 // @Produce 						json
@@ -102,6 +105,7 @@ func (th transactionHandler) CancelTransaction(ctx *gin.Context) {
 }
 
 // GetById		godoc
+// @Security 						BearerToken
 // @Summary							Get transaction by id
 // @Description 				Get transaction by id
 // @Produce 						json

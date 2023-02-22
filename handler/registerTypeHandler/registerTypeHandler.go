@@ -21,6 +21,7 @@ func NewRegisterTypeHandler(rts registerTypeService.RegisterTypeService) registe
 }
 
 // GetAll							godoc
+// @Security 					BearerToken
 // @Summary						Get all regiter types
 // @Description 			Get all register types
 // @Produce 					json

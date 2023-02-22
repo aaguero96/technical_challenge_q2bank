@@ -20,6 +20,7 @@ func NewWalletHandler(ws walletService.WalletService) walletHandler {
 }
 
 // GetAll							godoc
+// @Security 					BearerToken
 // @Summary						Get all wallets
 // @Description 			Get all wallets
 // @Produce 					json
@@ -38,6 +39,7 @@ func (wh walletHandler) GetAll(ctx *gin.Context) {
 }
 
 // GetById							godoc
+// @Security 						BearerToken
 // @Summary							Get wallet by id
 // @Description 				Get wallet by id
 // @Produce 						json

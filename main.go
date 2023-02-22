@@ -35,6 +35,9 @@ func init() {
 // @description A transaction service API in Go using Gin framework, Redis for queue works and Postgres as relational bank
 // @host localhost:3000
 // @BasePath /
+// @securityDefinitions.apikey BearerToken
+// @in header
+// @name Authorization
 func main() {
 	// Start Repositories
 	userRepository := userRepository.NewUserRepository(initializers.DB)
