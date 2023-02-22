@@ -15,6 +15,7 @@ services:
       - redis
       - consumer
       - db
+      - migrate
     
   redis:
     image: redis:alpine
@@ -57,3 +58,13 @@ services:
       POSTGRES_USER: 'admin'
       POSTGRES_PASSWORD: 'admin'
       POSTGRES_DB: 'develop'
+    
+  migrate:
+    container_name: migrate
+    command: make reset-db
+    build: .
+    environment:
+      REDIS_HOST: redis
+      DB_HOST: postgres_db
+    depends_on:
+      - db
