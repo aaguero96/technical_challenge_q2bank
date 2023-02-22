@@ -28,7 +28,7 @@ func TestUnitGetAll(t *testing.T) {
 		expect  Response
 	}{
 		{
-			title:   "if sucess case, return wallets and nil - OK CASE",
+			title:   "if sucess case, return userTypes and nil - OK CASE",
 			service: NewUserTypeService(userTypeRepositoryMock),
 			expect: Response{
 				userTypes: []UserTypeResponse{
@@ -78,7 +78,7 @@ func TestUnitGetById(t *testing.T) {
 		expect  Response
 	}{
 		{
-			title:   "if sucess case, return wallet and nil - OK CASE",
+			title:   "if sucess case, return userType and nil - OK CASE",
 			service: NewUserTypeService(userTypeRepositoryMock),
 			param: Request{
 				id: 1,
