@@ -3,6 +3,7 @@ package walletService
 import (
 	"testing"
 
+	"github.com/aaguero96/technical_challenge_q2bank/models"
 	"github.com/aaguero96/technical_challenge_q2bank/repository/walletRepository"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -94,6 +95,58 @@ func TestUnitGetById(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.title, func(t *testing.T) {
 			result, err := test.service.GetById(test.param.id)
+			if test.expect.err != nil {
+				assert.Equal(test.expect.err, err, "expected error %v, instead got %v", test.expect.err, err)
+			} else {
+				require.Nil(err, "expected error to be nil, instead got %v on %s", err, test.expect.err)
+			}
+			assert.Equal(test.expect.wallet, result, "expected result %v, instead got %v", test.expect.wallet, result)
+		})
+	}
+}
+
+func TestUnitAddAmount(t *testing.T) {
+	assert := assert.New(t)
+	require := require.New(t)
+
+	// Request / Response
+	type Request struct {
+		walletID       int
+		increaseAmount float64
+	}
+	type Response struct {
+		wallet models.WalletModel
+		err    error
+	}
+
+	// Mock Repositories
+	walletRepositoryMock := walletRepository.NewWalletRepositoryMock()
+
+	// Test scenarios
+	tests := []struct {
+		title   string
+		service WalletService
+		param   Request
+		expect  Response
+	}{
+		{
+			title:   "if sucess case, return wallet and nil - OK CASE",
+			service: NewWalletService(&walletRepositoryMock),
+			param: Request{
+				walletID:       1,
+				increaseAmount: 234,
+			},
+			expect: Response{
+				wallet: models.WalletModel{WalletID: 1, Amount: 1234},
+				err:    nil,
+			},
+		},
+	}
+
+	// Run tests
+	for _, test := range tests {
+		t.Run(test.title, func(t *testing.T) {
+			result, err := test.service.AddAmount(test.param.walletID, test.param.increaseAmount)
 			if test.expect.err != nil {
 				assert.Equal(test.expect.err, err, "expected error %v, instead got %v", test.expect.err, err)
 			} else {
