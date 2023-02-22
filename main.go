@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "github.com/aaguero96/technical_challenge_q2bank/docs"
 	"github.com/aaguero96/technical_challenge_q2bank/handler/registerTypeHandler"
 	"github.com/aaguero96/technical_challenge_q2bank/handler/transactionHandler"
 	"github.com/aaguero96/technical_challenge_q2bank/handler/userHandler"
@@ -19,6 +20,8 @@ import (
 	"github.com/aaguero96/technical_challenge_q2bank/service/userTypeService"
 	"github.com/aaguero96/technical_challenge_q2bank/service/walletService"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func init() {
@@ -27,6 +30,11 @@ func init() {
 	initializers.ConnectRedisClient()
 }
 
+// @title Technical Challenge Q2bank
+// @version 1.0
+// @description A transaction service API in Go using Gin framework, Redis for queue works and Postgres as relational bank
+// @host localhost:3000
+// @BasePath /
 func main() {
 	// Start Repositories
 	userRepository := userRepository.NewUserRepository(initializers.DB)
@@ -50,6 +58,9 @@ func main() {
 	walletHandler := walletHandler.NewWalletHandler(walletService)
 
 	router := gin.Default()
+
+	// Add swagger
+	router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	v1 := router.Group("/v1")
 

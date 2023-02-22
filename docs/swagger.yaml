@@ -1,0 +1,454 @@
+basePath: /
+definitions:
+  registerTypeService.RegisterTypeResponse:
+    properties:
+      id:
+        type: integer
+      type:
+        type: string
+    type: object
+  transactionHandler.CreateTransactionRequest:
+    properties:
+      amount:
+        type: number
+      payee_id:
+        type: integer
+      payer_id:
+        type: integer
+    type: object
+  transactionService.CreateTransactionResponse:
+    properties:
+      amount:
+        type: number
+      payee_id:
+        type: integer
+      payer_id:
+        type: integer
+      status:
+        type: string
+      transaction_id:
+        type: integer
+    type: object
+  transactionService.GetByIdResponse:
+    properties:
+      amount:
+        type: number
+      payee_id:
+        type: integer
+      payer_id:
+        type: integer
+      status:
+        type: string
+      transaction_id:
+        type: integer
+    type: object
+  transactionService.TransactionResponse:
+    properties:
+      amount:
+        type: number
+      payee_id:
+        type: integer
+      payer_id:
+        type: integer
+      status:
+        type: string
+    type: object
+  userHandler.CreateUserRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      register_number:
+        type: integer
+      register_type_id:
+        type: integer
+      user_type_id:
+        type: integer
+    type: object
+  userHandler.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  userService.CreateUserResponse:
+    properties:
+      expiring_in:
+        type: string
+      token:
+        type: string
+    type: object
+  userService.GetByIdResponse:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      register_number:
+        type: integer
+      register_type_id:
+        type: integer
+      user_type_id:
+        type: integer
+      wallet_id:
+        type: integer
+    type: object
+  userService.LoginUserResponse:
+    properties:
+      expiring_in:
+        type: string
+      token:
+        type: string
+    type: object
+  userService.UserResponse:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      wallet_id:
+        type: integer
+    type: object
+  userTypeService.GetByIdResponse:
+    properties:
+      user_type:
+        type: string
+      user_type_id:
+        type: integer
+    type: object
+  userTypeService.UserTypeResponse:
+    properties:
+      id:
+        type: integer
+      type:
+        type: string
+    type: object
+  walletService.WalletResponse:
+    properties:
+      amount:
+        type: number
+      id:
+        type: integer
+    type: object
+host: localhost:3000
+info:
+  contact: {}
+  description: A transaction service API in Go using Gin framework, Redis for queue
+    works and Postgres as relational bank
+  title: Technical Challenge Q2bank
+  version: "1.0"
+paths:
+  /v1/login:
+    post:
+      description: Create user
+      parameters:
+      - description: User credencial
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/userHandler.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/userService.LoginUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: error
+        "500":
+          description: Internal Server Error
+          schema:
+            type: error
+      summary: Create user
+      tags:
+      - login
+  /v1/register_types:
+    get:
+      description: Get all register types
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/registerTypeService.RegisterTypeResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            type: error
+      summary: Get all regiter types
+      tags:
+      - register type
+  /v1/transactions:
+    get:
+      description: Get all transactions
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/transactionService.TransactionResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            type: error
+      summary: Get all transactions
+      tags:
+      - transaction
+    post:
+      description: Create transaction and send to redis queue to be aproved
+      parameters:
+      - description: Transaction data
+        in: body
+        name: transaction
+        required: true
+        schema:
+          $ref: '#/definitions/transactionHandler.CreateTransactionRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/transactionService.CreateTransactionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: error
+        "500":
+          description: Internal Server Error
+          schema:
+            type: error
+      summary: Create transaction
+      tags:
+      - transaction
+  /v1/transactions/{id}:
+    delete:
+      description: Cancel transaction and send to redis queue to be aproved
+      parameters:
+      - description: transaction id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            type: error
+        "500":
+          description: Internal Server Error
+          schema:
+            type: error
+      summary: Cancel transaction
+      tags:
+      - transaction
+    get:
+      description: Get transaction by id
+      parameters:
+      - description: transaction id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/transactionService.GetByIdResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: error
+        "500":
+          description: Internal Server Error
+          schema:
+            type: error
+      summary: Get transaction by id
+      tags:
+      - transaction
+  /v1/user_types:
+    get:
+      description: Get all user types
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/userTypeService.UserTypeResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            type: error
+      summary: Get all user types
+      tags:
+      - user type
+  /v1/user_types/{id}:
+    get:
+      description: Get user type by id
+      parameters:
+      - description: user type id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/userTypeService.GetByIdResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: error
+        "500":
+          description: Internal Server Error
+          schema:
+            type: error
+      summary: Get user type by id
+      tags:
+      - user type
+  /v1/users:
+    get:
+      description: Get all users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/userService.UserResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            type: error
+      summary: Get all users
+      tags:
+      - user
+    post:
+      description: Create user
+      parameters:
+      - description: User data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/userHandler.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/userService.CreateUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: error
+        "500":
+          description: Internal Server Error
+          schema:
+            type: error
+      summary: Create user
+      tags:
+      - user
+  /v1/users/{id}:
+    get:
+      description: Get users by id
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/userService.GetByIdResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: error
+        "500":
+          description: Internal Server Error
+          schema:
+            type: error
+      summary: Get users by id
+      tags:
+      - user
+  /v1/wallets:
+    get:
+      description: Get all wallets
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/walletService.WalletResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            type: error
+      summary: Get all wallets
+      tags:
+      - wallet
+  /v1/wallets/{id}:
+    get:
+      description: Get wallet by id
+      parameters:
+      - description: wallet id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/userTypeService.GetByIdResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: error
+        "500":
+          description: Internal Server Error
+          schema:
+            type: error
+      summary: Get wallet by id
+      tags:
+      - wallet
+swagger: "2.0"
