@@ -1,7 +1,9 @@
 package walletHandler
 
 import (
+	"errors"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/aaguero96/technical_challenge_q2bank/service/walletService"
@@ -59,6 +61,53 @@ func (wh walletHandler) GetById(ctx *gin.Context) {
 	}
 
 	wallet, err := wh.walletService.GetById(id)
+	if err != nil {
+		httputil.NewError(ctx, http.StatusInternalServerError, err)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, wallet)
+}
+
+// AddAmount						godoc
+// @Summary							Add amount in wallet
+// @Description 				Add amount or descrease amount (in case of negative amount) in wallet (only for admin in moment)
+// @Produce 						json
+// @Tags 								wallet
+// @Param   						id path int true "wallet id"
+// @Param   						amount body int true "Amount"
+// @Router							/v1/wallets/{id} [patch]
+// @Success							200 {object} models.WalletModel
+// @Success							400 {error} error
+// @Success							401 {error} error
+// @Success							500 {error} error
+func (wh walletHandler) AddAmount(ctx *gin.Context) {
+	// Verify if is admin
+	username, password, ok := ctx.Request.BasicAuth()
+	if !ok {
+		httputil.NewError(ctx, http.StatusUnauthorized, errors.New("unauthorized"))
+		return
+	}
+	if username != os.Getenv("ADMIN_USERNAME") || password != os.Getenv("ADMIN_PASSWORD") {
+		httputil.NewError(ctx, http.StatusUnauthorized, errors.New("unauthorized"))
+		return
+	}
+
+	paramID := ctx.Param("id")
+
+	id, err := strconv.Atoi(paramID)
+	if err != nil {
+		httputil.NewError(ctx, http.StatusBadRequest, err)
+		return
+	}
+
+	var input AddAmountRequest
+	if err := ctx.ShouldBindJSON(&input); err != nil {
+		httputil.NewError(ctx, http.StatusBadRequest, err)
+		return
+	}
+
+	wallet, err := wh.walletService.AddAmount(id, input.Amount)
 	if err != nil {
 		httputil.NewError(ctx, http.StatusInternalServerError, err)
 		return

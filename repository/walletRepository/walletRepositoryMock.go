@@ -31,3 +31,18 @@ func (wrm walletRepositoryMock) GetById(id int) (models.WalletModel, error) {
 	}
 	return models.WalletModel{}, errors.New("wallet not found")
 }
+
+func (wrm *walletRepositoryMock) AddAmount(walletID int, increaseAmount float64) (models.WalletModel, error) {
+	var walletUpdated models.WalletModel
+	for index, wallet := range wrm.wallets {
+		if walletID == wallet.WalletID {
+			walletUpdated = models.WalletModel{
+				WalletID: wallet.WalletID,
+				Amount:   wallet.Amount + increaseAmount,
+			}
+			wrm.wallets[index] = walletUpdated
+		}
+	}
+
+	return walletUpdated, nil
+}

@@ -29,7 +29,7 @@ func TestUnitGetAll(t *testing.T) {
 	}{
 		{
 			title:   "if sucess case, return wallets and nil - OK CASE",
-			service: NewWalletService(walletRepositoryMock),
+			service: NewWalletService(&walletRepositoryMock),
 			expect: Response{
 				wallets: []WalletResponse{
 					{ID: 1, Amount: 1000},
@@ -79,7 +79,7 @@ func TestUnitGetById(t *testing.T) {
 	}{
 		{
 			title:   "if sucess case, return wallet and nil - OK CASE",
-			service: NewWalletService(walletRepositoryMock),
+			service: NewWalletService(&walletRepositoryMock),
 			param: Request{
 				id: 1,
 			},

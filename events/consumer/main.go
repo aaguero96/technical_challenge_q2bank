@@ -108,7 +108,7 @@ func main() {
 	userTypeRepository := userTypeRepository.NewUserTypeRepository(initializers.DB)
 
 	// Start Services
-	ts = transactionService.NewTransactionService(transactionRepository, &userRepository, walletRepository, userTypeRepository)
+	ts = transactionService.NewTransactionService(transactionRepository, &userRepository, &walletRepository, userTypeRepository)
 	evs = externalValidatorService.NewExternalValidatorService(validator.NewValidatorExternalAPI())
 
 	go consumeEvents()

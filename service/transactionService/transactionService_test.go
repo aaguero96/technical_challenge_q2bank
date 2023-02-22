@@ -35,7 +35,7 @@ func TestUnitGetAll(t *testing.T) {
 	}{
 		{
 			title:   "if sucess case, return transactions and nil - OK CASE",
-			service: NewTransactionService(transactionRepositoryMock, &userRepositoryMock, walletRepositoryMock, userTypeRepositoryMock),
+			service: NewTransactionService(transactionRepositoryMock, &userRepositoryMock, &walletRepositoryMock, userTypeRepositoryMock),
 			expect: Response{
 				transactions: []TransactionResponse{
 					{
@@ -92,7 +92,7 @@ func TestUnitGetById(t *testing.T) {
 	}{
 		{
 			title:   "if sucess case, return transaction and nil - OK CASE",
-			service: NewTransactionService(transactionRepositoryMock, &userRepositoryMock, walletRepositoryMock, userTypeRepositoryMock),
+			service: NewTransactionService(transactionRepositoryMock, &userRepositoryMock, &walletRepositoryMock, userTypeRepositoryMock),
 			param: Request{
 				id: 1,
 			},
