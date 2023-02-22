@@ -70,7 +70,7 @@ func (uh userHandler) CreateUser(ctx *gin.Context) {
 	}
 
 	ctx.SetCookie("token", response.Token, 3600, "/", "localhost", false, true)
-	ctx.JSON(http.StatusOK, response)
+	ctx.JSON(http.StatusCreated, response)
 }
 
 func (uh userHandler) LoginUser(ctx *gin.Context) {

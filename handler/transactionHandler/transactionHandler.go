@@ -50,7 +50,7 @@ func (th transactionHandler) CreateTransaction(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, transactions)
+	ctx.JSON(http.StatusCreated, transactions)
 }
 
 func (th transactionHandler) CancelTransaction(ctx *gin.Context) {
@@ -74,7 +74,7 @@ func (th transactionHandler) CancelTransaction(ctx *gin.Context) {
 		Message string `json:"message"`
 	}
 
-	ctx.JSON(http.StatusOK, Response{Message: "Cancel in progress"})
+	ctx.JSON(http.StatusNoContent, Response{Message: "Cancel in progress"})
 }
 
 func (th transactionHandler) GetById(ctx *gin.Context) {
