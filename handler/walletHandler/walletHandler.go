@@ -29,7 +29,7 @@ func NewWalletHandler(ws walletService.WalletService) walletHandler {
 // @Tags 							wallet
 // @Router						/v1/wallets [get]
 // @Success						200 {object} []walletService.WalletResponse
-// @Success						500 {error} error
+// @Failure						500 {error} error
 func (wh walletHandler) GetAll(ctx *gin.Context) {
 	wallets, err := wh.walletService.GetAll()
 	if err != nil {
@@ -49,8 +49,8 @@ func (wh walletHandler) GetAll(ctx *gin.Context) {
 // @Param   						id path int true "wallet id"
 // @Router							/v1/wallets/{id} [get]
 // @Success							200 {object} userTypeService.GetByIdResponse
-// @Success							400 {error} error
-// @Success							500 {error} error
+// @Failure							400 {error} error
+// @Failure							500 {error} error
 func (wh walletHandler) GetById(ctx *gin.Context) {
 	paramID := ctx.Param("id")
 
@@ -79,9 +79,9 @@ func (wh walletHandler) GetById(ctx *gin.Context) {
 // @Param   						amount body AddAmountRequest true "Amount"
 // @Router							/v1/wallets/{id} [patch]
 // @Success							200 {object} models.WalletModel
-// @Success							400 {error} error
-// @Success							401 {error} error
-// @Success							500 {error} error
+// @Failure							400 {error} error
+// @Failure							401 {error} error
+// @Failure							500 {error} error
 func (wh walletHandler) AddAmount(ctx *gin.Context) {
 	// Verify if is admin
 	username, password, ok := ctx.Request.BasicAuth()

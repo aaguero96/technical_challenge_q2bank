@@ -29,7 +29,7 @@ func NewTransactionHandler(ts transactionService.TransactionService) transaction
 // @Tags 							transaction
 // @Router						/v1/transactions [get]
 // @Success						200 {object} []transactionService.TransactionResponse
-// @Success						500 {error} error
+// @Failure						500 {error} error
 func (th transactionHandler) GetAll(ctx *gin.Context) {
 	transactions, err := th.transactionService.GetAll()
 	if err != nil {
@@ -49,8 +49,8 @@ func (th transactionHandler) GetAll(ctx *gin.Context) {
 // @Param   						transaction body CreateTransactionRequest true "Transaction data"
 // @Router							/v1/transactions [post]
 // @Success							201 {object} transactionService.CreateTransactionResponse
-// @Success							400 {error} error
-// @Success							500 {error} error
+// @Failure							400 {error} error
+// @Failure							500 {error} error
 func (th transactionHandler) CreateTransaction(ctx *gin.Context) {
 	payeerEmail := ctx.Request.Header.Get("email")
 
@@ -78,8 +78,8 @@ func (th transactionHandler) CreateTransaction(ctx *gin.Context) {
 // @Param   						id path int true "transaction id"
 // @Router							/v1/transactions/{id} [delete]
 // @Success							204
-// @Success							400 {error} error
-// @Success							500 {error} error
+// @Failure							400 {error} error
+// @Failure							500 {error} error
 func (th transactionHandler) CancelTransaction(ctx *gin.Context) {
 	paramID := ctx.Param("id")
 
@@ -113,8 +113,8 @@ func (th transactionHandler) CancelTransaction(ctx *gin.Context) {
 // @Param   						id path int true "transaction id"
 // @Router							/v1/transactions/{id} [get]
 // @Success							200 {object} transactionService.GetByIdResponse
-// @Success							400 {error} error
-// @Success							500 {error} error
+// @Failure							400 {error} error
+// @Failure							500 {error} error
 func (th transactionHandler) GetById(ctx *gin.Context) {
 	paramID := ctx.Param("id")
 

@@ -27,7 +27,7 @@ func NewUserTypeHandler(uts userTypeService.UserTypeService) userTypeHandler {
 // @Tags 							user type
 // @Router						/v1/user_types [get]
 // @Success						200 {object} []userTypeService.UserTypeResponse
-// @Success						500 {error} error
+// @Failure						500 {error} error
 func (uth userTypeHandler) GetAll(ctx *gin.Context) {
 	userTypes, err := uth.userTypeService.GetAll()
 	if err != nil {
@@ -47,8 +47,8 @@ func (uth userTypeHandler) GetAll(ctx *gin.Context) {
 // @Param   						id path int true "user type id"
 // @Router							/v1/user_types/{id} [get]
 // @Success							200 {object} userTypeService.GetByIdResponse
-// @Success							400 {error} error
-// @Success							500 {error} error
+// @Failure							400 {error} error
+// @Failure							500 {error} error
 func (uth userTypeHandler) GetById(ctx *gin.Context) {
 	paramID := ctx.Param("id")
 

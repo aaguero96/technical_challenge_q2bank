@@ -27,7 +27,7 @@ func NewUserHandler(us userService.UserService) userHandler {
 // @Tags 							user
 // @Router						/v1/users [get]
 // @Success						200 {object} []userService.UserResponse
-// @Success						500 {error} error
+// @Failure						500 {error} error
 func (uh userHandler) GetAll(ctx *gin.Context) {
 	users, err := uh.userService.GetAll()
 	if err != nil {
@@ -47,8 +47,8 @@ func (uh userHandler) GetAll(ctx *gin.Context) {
 // @Param   						id path int true "user id"
 // @Router							/v1/users/{id} [get]
 // @Success							200 {object} userService.GetByIdResponse
-// @Success							400 {error} error
-// @Success							500 {error} error
+// @Failure							400 {error} error
+// @Failure							500 {error} error
 func (uh userHandler) GetById(ctx *gin.Context) {
 	paramID := ctx.Param("id")
 
@@ -75,8 +75,8 @@ func (uh userHandler) GetById(ctx *gin.Context) {
 // @Param   						user body CreateUserRequest true "User data"
 // @Router							/v1/users [post]
 // @Success							200 {object} userService.CreateUserResponse
-// @Success							400 {error} error
-// @Success							500 {error} error
+// @Failure							400 {error} error
+// @Failure							500 {error} error
 func (uh userHandler) CreateUser(ctx *gin.Context) {
 	var input CreateUserRequest
 	if err := ctx.ShouldBindJSON(&input); err != nil {
@@ -102,8 +102,8 @@ func (uh userHandler) CreateUser(ctx *gin.Context) {
 // @Param   						user body LoginRequest true "User credencial"
 // @Router							/v1/login [post]
 // @Success							200 {object} userService.LoginUserResponse
-// @Success							400 {error} error
-// @Success							500 {error} error
+// @Failure							400 {error} error
+// @Failure							500 {error} error
 func (uh userHandler) LoginUser(ctx *gin.Context) {
 	var input LoginRequest
 	if err := ctx.ShouldBindJSON(&input); err != nil {

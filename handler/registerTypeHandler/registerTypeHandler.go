@@ -28,7 +28,7 @@ func NewRegisterTypeHandler(rts registerTypeService.RegisterTypeService) registe
 // @Tags 							register type
 // @Router						/v1/register_types [get]
 // @Success						200 {object} []registerTypeService.RegisterTypeResponse
-// @Success						500 {error} error
+// @Failure						500 {error} error
 func (rth registerTypeHandler) GetAll(ctx *gin.Context) {
 	registerTypes, err := rth.registerTypeService.GetAll()
 	if err != nil {
