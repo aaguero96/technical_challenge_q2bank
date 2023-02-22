@@ -36,7 +36,7 @@ func (ur userRepository) GetById(id int) (models.UserModel, error) {
 	return user, nil
 }
 
-func (ur userRepository) CreateUser(name, email, password string, registerNumber int64, registerTypeID, userTypeID int) (models.UserModel, error) {
+func (ur *userRepository) CreateUser(name, email, password string, registerNumber int64, registerTypeID, userTypeID int) (models.UserModel, error) {
 	// Create transaction
 	tx := ur.db.Begin()
 
