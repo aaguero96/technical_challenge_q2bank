@@ -1,10 +1,25 @@
 <h1>Technical challange by q2bank</h1>
 
-<h2>Description</h2>
+<h2>Summary</h2>
+
+1. [Description](#description)
+2. [Requirements](#requirements)
+3. [Deadline](#deadline)
+4. [Schedule](#schedule)
+5. [Requirements to run local](#requirements-to-run-local)
+6. [Run local](#run-local)
+7. [Project Architecture](#project-architecture)
+8. [Endpoints](#endpoints)
+9. [Info About Requests](#info-about-requests)
+10. [Requests in postman](#requests-in-postman)
+11. [Requests in swagger](#requests-in-swagger)
+12. [Next steps](#next-steps)
+
+<h2 id="description">Description</h2>
 
 - The technical challenge consists of creating an API REST that exposes an system based on transactions common to common or common to storekeeper, but not storekeeper to storekeeper.
 
-<h2>Requirements</h2>
+<h2 id="requirements">Requirements</h2>
 
 - Technical requirements:
   - Golang application
@@ -18,20 +33,20 @@
   - Unit tests
   - Swagger documentation
 
-<h2>Deadline</h2>
+<h2 id="deadline">Deadline</h2>
 
 - The test starts on `📅 16 feb 2023 - Thursday` with 7 days (calendar days) of time to finish
 - Ergo the deadline is `📅 23 feb 2023 - Thursday`
 
-<h2>Schedule</h2>
+<h2 id="schedule">Schedule</h2>
 
 - [Schedule to this project](https://technical-challange-q2bank.atlassian.net/jira/software/projects/TCBQ/boards/1)
 
-<h2>Requirements to run local</h2>
+<h2 id="requirements-to-run-local">Requirements to run local</h2>
 
-1. `Docker version 20.10.23`
-2. `Docker Compose version v2.12.2` (for docker-compose commands)
-4. `GNU Make 4.2.1` (for makefile commands)
+1. `Docker version 20.10.23` => [install docker](https://docs.docker.com/get-docker/)
+2. `Docker Compose version v2.12.2` (for docker-compose commands) => [install docker compose](https://docs.docker.com/compose/install/)
+4. `GNU Make 4.2.1` (for makefile commands) => [install make](https://www.gnu.org/software/make/)
 3. You have to use `docker-compose` instead `docker compose`
 5. All environment variables that you need are in `./.env.example` file
 6. Ports:
@@ -43,9 +58,10 @@
   - If you dont have one of those PORTS opened, You will have kill them with those commands:
     - `sudo lsof -i:<PORT>` (to discover what is in your PORT with value <PORT>)
     - `sudo kill -9 <PID>` (to kill what is running in your PORT with PID value <PID>)
-7. If you need to run your application without docker (not recommended): go version go1.18.4 linux/amd64
+7. If you need to run your application without docker (not recommended): `go version go1.18.4 linux/amd64` => [install go](https://go.dev/doc/install)
+8. I recommend use postman to test endpoints (but you have more options) => [install postman](https://www.postman.com/downloads/)
 
-<h2>Run local</h2>
+<h2 id="run-local">Run local</h2>
 
 1. Clone repository
 - If you choose HTTPS: `git clone https://https://github.com/aaguero96/technical_challenge_q2bank/blob.git`
@@ -69,7 +85,7 @@
 - If you need to generate swagger file run: `make generate-swagger`
 - If you need to run just your api service local run: `make run-dev`
 
-<h2>Project architecture</h2>
+<h2 id="project-architecture">Project architecture</h2>
 
 <h3>Directories</h3>
 
@@ -110,7 +126,7 @@
   - payer_id should not be related with "storekeeper"
   - status has 5 possiblities: denied, in process, completed, canceled, cancel in progress
 
-<h2>Endpoints</h2>
+<h2 id="endpoints">Endpoints</h2>
 
 1. POST localhost:3000/v1/login
 - Body:
@@ -307,7 +323,7 @@
 - Params: `id int`
 - Response: ``
 
-<h2>Info about requests</h2>
+<h2 id="info-about-requests">Info about requests</h2>
 
 - To must of endpoints you need a token access, this token is adquired in two endpoints (the body is an example but work in that database):
   - `POST localhost:3000/v1/login`
@@ -335,7 +351,7 @@
   - password: admin
   - I put that here just because is demonstrative, this is not secure in real projects (this would be passed by keybase or other software)
 
-<h2>Requests in postman</h2>
+<h2 id="requests-in-postman">Requests in postman</h2>
 
 1. Import collection to postman
 - In this repository has one file name `psotman.json`
@@ -354,7 +370,7 @@
 - In postman select option `Collections` and you have acees to all endpoints (as image bellow)
 <img src="https://github.com/aaguero96/technical_challenge_q2bank/blob/main/readme_images/postman_5.png?raw=true"/>
 
-<h2>Requests in swagger</h2>
+<h2 id="requests-in-swagger">Requests in swagger</h2>
 
 1. Access `localhost:3000/docs/index.html`
 2. You have three options to navigate on swagger:
@@ -368,4 +384,13 @@
 <img src="https://github.com/aaguero96/technical_challenge_q2bank/blob/main/readme_images/swagger_2.png?raw=true"/>
 - If token is "123456789abc987654321@@##" you have to fill just field BearerToken with "Bearer 123456789abc987654321@@##", Bearer as prefix is mandatory
 
-<h2>Next steps</h2>
+<h2 id="next-steps">Next steps</h2>
+- Instance database in cloud, aws or other tool
+- Instance redis in cloud, aws or other tool
+- Deploy image of consumer in cloud, aws or other tool
+- Deploy image of api in cloud, aws or other tool
+- Create more unit-tests
+- Create integration-tests
+- Add test in CI
+- Create CI/CD on github
+- Put strings on utils directory
