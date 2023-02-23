@@ -26,7 +26,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"email2@testmail.com\",\n    \"password\": \"Def4!t*2\"\n}"
+							"raw": "{\n    \"email\": \"email1@testmail.com\",\n    \"password\": \"Def4!t*1\"\n}"
 						},
 						"url": {
 							"raw": "{{host}}/login",
@@ -61,12 +61,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/register_types",
+							"raw": "{{host}}/register-types",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"register_types"
+								"register-types"
 							]
 						}
 					},
@@ -134,7 +134,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "2"
+									"value": "1"
 								}
 							]
 						}
@@ -148,7 +148,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"payer_id\": 2,\n    \"payee_id\": 1,\n    \"amount\": 90\n}"
+							"raw": "{\n    \"payer_id\": 3,\n    \"payee_id\": 1,\n    \"amount\": 905\n}"
 						},
 						"url": {
 							"raw": "{{host}}/transactions",
@@ -183,7 +183,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "2"
+									"value": "1"
 								}
 							]
 						}
@@ -268,12 +268,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/user_types",
+							"raw": "{{host}}/user-types",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"user_types"
+								"user-types"
 							]
 						}
 					},
@@ -285,12 +285,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/user_types/:id",
+							"raw": "{{host}}/user-types/:id",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"user_types",
+								"user-types",
 								":id"
 							],
 							"variable": [
@@ -371,7 +371,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"amount\": 10000\n}"
+							"raw": "{\n    \"amount\": 11235\n}"
 						},
 						"url": {
 							"raw": "{{host}}/wallets/:id",
