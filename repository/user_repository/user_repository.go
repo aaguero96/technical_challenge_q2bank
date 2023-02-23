@@ -48,6 +48,13 @@ func (ur *userRepository) CreateUser(name, email, password string, registerNumbe
 		return models.UserModel{}, result.Error
 	}
 
+	// Verify if userType exist
+	var userType models.UserTypeModel
+	result = tx.Model(&models.UserTypeModel{}).First(&userType, userTypeID)
+	if result.Error != nil {
+		return models.UserModel{}, result.Error
+	}
+
 	// Verify if registerNumber has correct number of chars
 	var registerType models.RegisterTypeModel
 	result = tx.Model(&models.RegisterTypeModel{}).First(&registerType, registerTypeID)
