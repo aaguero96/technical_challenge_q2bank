@@ -2,23 +2,23 @@ package main
 
 import (
 	_ "github.com/aaguero96/technical_challenge_q2bank/docs"
-	"github.com/aaguero96/technical_challenge_q2bank/handler/registerTypeHandler"
-	"github.com/aaguero96/technical_challenge_q2bank/handler/transactionHandler"
-	"github.com/aaguero96/technical_challenge_q2bank/handler/userHandler"
-	"github.com/aaguero96/technical_challenge_q2bank/handler/userTypeHandler"
-	"github.com/aaguero96/technical_challenge_q2bank/handler/walletHandler"
+	"github.com/aaguero96/technical_challenge_q2bank/handler/register_type_handler"
+	"github.com/aaguero96/technical_challenge_q2bank/handler/transaction_handler"
+	"github.com/aaguero96/technical_challenge_q2bank/handler/user_handler"
+	"github.com/aaguero96/technical_challenge_q2bank/handler/user_type_handler"
+	"github.com/aaguero96/technical_challenge_q2bank/handler/wallet_handler"
 	"github.com/aaguero96/technical_challenge_q2bank/initializers"
-	"github.com/aaguero96/technical_challenge_q2bank/repository/registerTypeRepository"
-	"github.com/aaguero96/technical_challenge_q2bank/repository/transactionRepository"
-	"github.com/aaguero96/technical_challenge_q2bank/repository/userRepository"
-	"github.com/aaguero96/technical_challenge_q2bank/repository/userTypeRepository"
-	"github.com/aaguero96/technical_challenge_q2bank/repository/walletRepository"
+	"github.com/aaguero96/technical_challenge_q2bank/repository/register_type_repository"
+	"github.com/aaguero96/technical_challenge_q2bank/repository/transaction_repository"
+	"github.com/aaguero96/technical_challenge_q2bank/repository/user_repository"
+	"github.com/aaguero96/technical_challenge_q2bank/repository/user_type_repository"
+	"github.com/aaguero96/technical_challenge_q2bank/repository/wallet_repository"
 	"github.com/aaguero96/technical_challenge_q2bank/routes"
-	"github.com/aaguero96/technical_challenge_q2bank/service/registerTypeService"
-	"github.com/aaguero96/technical_challenge_q2bank/service/transactionService"
-	"github.com/aaguero96/technical_challenge_q2bank/service/userService"
-	"github.com/aaguero96/technical_challenge_q2bank/service/userTypeService"
-	"github.com/aaguero96/technical_challenge_q2bank/service/walletService"
+	"github.com/aaguero96/technical_challenge_q2bank/service/register_type_service"
+	"github.com/aaguero96/technical_challenge_q2bank/service/transaction_service"
+	"github.com/aaguero96/technical_challenge_q2bank/service/user_service"
+	"github.com/aaguero96/technical_challenge_q2bank/service/user_type_service"
+	"github.com/aaguero96/technical_challenge_q2bank/service/wallet_service"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -43,25 +43,25 @@ func init() {
 // @name Admin Authorization
 func main() {
 	// Start Repositories
-	userRepository := userRepository.NewUserRepository(initializers.DB)
-	userTypeRepository := userTypeRepository.NewUserTypeRepository(initializers.DB)
-	registerTypeRepository := registerTypeRepository.NewRegisterTypeRepository(initializers.DB)
-	transactionRepository := transactionRepository.NewTransactionRepository(initializers.DB)
-	walletRepository := walletRepository.NewWalletRepository(initializers.DB)
+	userRepository := user_repository.NewUserRepository(initializers.DB)
+	userTypeRepository := user_type_repository.NewUserTypeRepository(initializers.DB)
+	registerTypeRepository := register_type_repository.NewRegisterTypeRepository(initializers.DB)
+	transactionRepository := transaction_repository.NewTransactionRepository(initializers.DB)
+	walletRepository := wallet_repository.NewWalletRepository(initializers.DB)
 
 	// Start Services
-	userService := userService.NewUserService(&userRepository)
-	userTypeService := userTypeService.NewUserTypeService(userTypeRepository)
-	registerTypeService := registerTypeService.NewRegisterTypeService(registerTypeRepository)
-	transactionService := transactionService.NewTransactionService(transactionRepository, &userRepository, &walletRepository, userTypeRepository)
-	walletService := walletService.NewWalletService(&walletRepository)
+	userService := user_service.NewUserService(&userRepository)
+	userTypeService := user_type_service.NewUserTypeService(userTypeRepository)
+	registerTypeService := register_type_service.NewRegisterTypeService(registerTypeRepository)
+	transactionService := transaction_service.NewTransactionService(transactionRepository, &userRepository, &walletRepository, userTypeRepository)
+	walletService := wallet_service.NewWalletService(&walletRepository)
 
 	// Start Handlers
-	userHandler := userHandler.NewUserHandler(userService)
-	userTypeHandler := userTypeHandler.NewUserTypeHandler(userTypeService)
-	registerTypeHandler := registerTypeHandler.NewRegisterTypeHandler(registerTypeService)
-	transactionHandler := transactionHandler.NewTransactionHandler(transactionService)
-	walletHandler := walletHandler.NewWalletHandler(walletService)
+	userHandler := user_handler.NewUserHandler(userService)
+	userTypeHandler := user_type_handler.NewUserTypeHandler(userTypeService)
+	registerTypeHandler := register_type_handler.NewRegisterTypeHandler(registerTypeService)
+	transactionHandler := transaction_handler.NewTransactionHandler(transactionService)
+	walletHandler := wallet_handler.NewWalletHandler(walletService)
 
 	router := gin.Default()
 

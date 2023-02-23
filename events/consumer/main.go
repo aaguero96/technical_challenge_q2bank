@@ -9,20 +9,20 @@ import (
 
 	"github.com/aaguero96/technical_challenge_q2bank/events/consumer/handler"
 	"github.com/aaguero96/technical_challenge_q2bank/events/producer"
-	"github.com/aaguero96/technical_challenge_q2bank/externalAPI/validator"
+	"github.com/aaguero96/technical_challenge_q2bank/external_API/validator"
 	"github.com/aaguero96/technical_challenge_q2bank/initializers"
-	"github.com/aaguero96/technical_challenge_q2bank/repository/transactionRepository"
-	"github.com/aaguero96/technical_challenge_q2bank/repository/userRepository"
-	"github.com/aaguero96/technical_challenge_q2bank/repository/userTypeRepository"
-	"github.com/aaguero96/technical_challenge_q2bank/repository/walletRepository"
-	"github.com/aaguero96/technical_challenge_q2bank/service/externalValidatorService"
-	"github.com/aaguero96/technical_challenge_q2bank/service/transactionService"
+	"github.com/aaguero96/technical_challenge_q2bank/repository/transaction_repository"
+	"github.com/aaguero96/technical_challenge_q2bank/repository/user_repository"
+	"github.com/aaguero96/technical_challenge_q2bank/repository/user_type_repository"
+	"github.com/aaguero96/technical_challenge_q2bank/repository/wallet_repository"
+	"github.com/aaguero96/technical_challenge_q2bank/service/external_validator_service"
+	"github.com/aaguero96/technical_challenge_q2bank/service/transaction_service"
 	"github.com/go-redis/redis/v7"
 	uuid "github.com/satori/go.uuid"
 )
 
-var ts transactionService.TransactionService
-var evs externalValidatorService.ExternalValidatorService
+var ts transaction_service.TransactionService
+var evs external_validator_service.ExternalValidatorService
 
 func init() {
 	initializers.LoadEnvVariables()
@@ -102,14 +102,14 @@ func consumeEvents() {
 
 func main() {
 	// Start Repositories
-	userRepository := userRepository.NewUserRepository(initializers.DB)
-	transactionRepository := transactionRepository.NewTransactionRepository(initializers.DB)
-	walletRepository := walletRepository.NewWalletRepository(initializers.DB)
-	userTypeRepository := userTypeRepository.NewUserTypeRepository(initializers.DB)
+	userRepository := user_repository.NewUserRepository(initializers.DB)
+	transactionRepository := transaction_repository.NewTransactionRepository(initializers.DB)
+	walletRepository := wallet_repository.NewWalletRepository(initializers.DB)
+	userTypeRepository := user_type_repository.NewUserTypeRepository(initializers.DB)
 
 	// Start Services
-	ts = transactionService.NewTransactionService(transactionRepository, &userRepository, &walletRepository, userTypeRepository)
-	evs = externalValidatorService.NewExternalValidatorService(validator.NewValidatorExternalAPI())
+	ts = transaction_service.NewTransactionService(transactionRepository, &userRepository, &walletRepository, userTypeRepository)
+	evs = external_validator_service.NewExternalValidatorService(validator.NewValidatorExternalAPI())
 
 	go consumeEvents()
 

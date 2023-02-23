@@ -1,12 +1,12 @@
 package routes
 
 import (
-	"github.com/aaguero96/technical_challenge_q2bank/handler/userHandler"
+	"github.com/aaguero96/technical_challenge_q2bank/handler/user_handler"
 	"github.com/aaguero96/technical_challenge_q2bank/middleware"
 	"github.com/gin-gonic/gin"
 )
 
-func NewUserRoutes(rg *gin.RouterGroup, uh userHandler.UserHandler) {
+func NewUserRoutes(rg *gin.RouterGroup, uh user_handler.UserHandler) {
 	users := rg.Group("/users")
 
 	users.POST("/", uh.CreateUser)
