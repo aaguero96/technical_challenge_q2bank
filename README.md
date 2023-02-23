@@ -352,6 +352,7 @@
   - username: admin
   - password: admin
   - I put that here just because is demonstrative, this is not secure in real projects (this would be passed by keybase or other software)
+- If you have both cookie and token but the user is different, the preference is token
 
 <h2 id="requests-in-postman">Requests in postman</h2>
 
