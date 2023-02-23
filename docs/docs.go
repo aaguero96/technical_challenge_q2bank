@@ -34,6 +34,13 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/user_handler.LoginRequest"
                         }
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Do you agree with cookies?",
+                        "name": "agree_cookie",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -390,6 +397,13 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/user_handler.CreateUserRequest"
                         }
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Do you agree with cookies?",
+                        "name": "agree_cookie",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {

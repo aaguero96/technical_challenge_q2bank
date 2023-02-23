@@ -29,12 +29,18 @@
 							"raw": "{\n    \"email\": \"email1@testmail.com\",\n    \"password\": \"Def4!t*1\"\n}"
 						},
 						"url": {
-							"raw": "{{host}}/login",
+							"raw": "{{host}}/login?agree_cookie=true",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"login"
+							],
+							"query": [
+								{
+									"key": "agree_cookie",
+									"value": "true"
+								}
 							]
 						}
 					},
@@ -243,15 +249,21 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"andre aguero\",\n    \"email\": \"andre@teste.com\",\n    \"password\": \"Def4!t*0\",\n    \"register_number\": 12345678900,\n    \"register_type_id\": 1,\n    \"user_type_id\": 1\n}"
+							"raw": "{\n    \"name\": \"andre aguero\",\n    \"email\": \"andre@teste.com\",\n    \"password\": \"Def4!t*0\",\n    \"register_number\": 12345678900,\n    \"register_type_id\": 1,\n    \"user_type_id\": 3\n}"
 						},
 						"url": {
-							"raw": "{{host}}/users",
+							"raw": "{{host}}/users?agree_cookie=false",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"users"
+							],
+							"query": [
+								{
+									"key": "agree_cookie",
+									"value": "false"
+								}
 							]
 						}
 					},

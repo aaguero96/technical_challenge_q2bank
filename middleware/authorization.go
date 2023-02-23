@@ -12,17 +12,17 @@ import (
 
 func Authorization(ctx *gin.Context) {
 	var token string
+	var err error
 
-	token, err := ctx.Cookie("token")
-	if err != nil {
-		bearerToken := ctx.Request.Header.Get("Authorization")
-
-		if bearerToken == "" {
+	bearerToken := ctx.Request.Header.Get("Authorization")
+	if bearerToken == "" {
+		token, err = ctx.Cookie("token")
+		if err != nil {
 			httputil.NewError(ctx, http.StatusUnauthorized, errors.New("token is not in cookies and it is not in authorizarion bearer"))
 			ctx.Abort()
 			return
 		}
-
+	} else {
 		token = strings.Split(bearerToken, "Bearer ")[1]
 	}
 

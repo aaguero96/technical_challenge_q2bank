@@ -73,6 +73,7 @@ func (uh userHandler) GetById(ctx *gin.Context) {
 // @Produce 						json
 // @Tags 								user
 // @Param   						user body CreateUserRequest true "User data"
+// @Param   						agree_cookie query bool true "Do you agree with cookies?"
 // @Router							/v1/users [post]
 // @Success							200 {object} user_service.CreateUserResponse
 // @Failure							400 {error} error
@@ -84,13 +85,17 @@ func (uh userHandler) CreateUser(ctx *gin.Context) {
 		return
 	}
 
+	agreeCookie := ctx.Query("agree_cookie")
+
 	response, err := uh.userService.CreateUser(input.Name, input.Email, input.Password, input.RegisterNumber, input.RegisterTypeID, input.UserTypeID)
 	if err != nil {
 		httputil.NewError(ctx, http.StatusInternalServerError, err)
 		return
 	}
 
-	ctx.SetCookie("token", response.Token, 3600, "/", "localhost", false, true)
+	if agreeCookie == "true" {
+		ctx.SetCookie("token", response.Token, 3600, "/", "localhost", false, true)
+	}
 	ctx.JSON(http.StatusCreated, response)
 }
 
@@ -100,6 +105,7 @@ func (uh userHandler) CreateUser(ctx *gin.Context) {
 // @Produce 						json
 // @Tags 								login
 // @Param   						user body LoginRequest true "User credencial"
+// @Param   						agree_cookie query bool true "Do you agree with cookies?"
 // @Router							/v1/login [post]
 // @Success							200 {object} user_service.LoginUserResponse
 // @Failure							400 {error} error
@@ -111,12 +117,16 @@ func (uh userHandler) LoginUser(ctx *gin.Context) {
 		return
 	}
 
+	agreeCookie := ctx.Query("agree_cookie")
+
 	response, err := uh.userService.LoginUser(input.Email, input.Password)
 	if err != nil {
 		httputil.NewError(ctx, http.StatusInternalServerError, err)
 		return
 	}
 
-	ctx.SetCookie("token", response.Token, 3600, "/", "localhost", false, true)
+	if agreeCookie == "true" {
+		ctx.SetCookie("token", response.Token, 3600, "/", "localhost", false, true)
+	}
 	ctx.JSON(http.StatusOK, response)
 }

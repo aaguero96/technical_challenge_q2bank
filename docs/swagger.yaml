@@ -171,6 +171,11 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/user_handler.LoginRequest'
+      - description: Do you agree with cookies?
+        in: query
+        name: agree_cookie
+        required: true
+        type: boolean
       produces:
       - application/json
       responses:
@@ -395,6 +400,11 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/user_handler.CreateUserRequest'
+      - description: Do you agree with cookies?
+        in: query
+        name: agree_cookie
+        required: true
+        type: boolean
       produces:
       - application/json
       responses:

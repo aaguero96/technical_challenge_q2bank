@@ -129,6 +129,7 @@
 <h2 id="endpoints">Endpoints</h2>
 
 1. POST localhost:3000/v1/login
+- Query param: `agree_cookie: bool`
 - Body:
 ```
 {
@@ -146,6 +147,7 @@
 - Cookies: this method put token in localhost cookies as "token"
 
 2. POST localhost:3000/v1/users
+- Query param: `agree_cookie: bool`
 - Body:
 ```
 {
