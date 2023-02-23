@@ -48,7 +48,7 @@
 <h2>Run local</h2>
 
 1. Clone repository
-- If you choose HTTPS: `git clone https://github.com/aaguero96/technical_challenge_q2bank.git`
+- If you choose HTTPS: `git clone https://https://github.com/aaguero96/technical_challenge_q2bank/blob.git`
 - If you choose SSH: `git clone git@github.com:aaguero96/technical_challenge_q2bank.git`
 
 2. Install dependencies
@@ -91,13 +91,13 @@
 
 <h3>Request flow</h3>
 
-<img src="https://github.com/aaguero96/technical_challenge_q2bank/readme_images/request_flow.png?raw=true"/>
+<img src="https://github.com/aaguero96/technical_challenge_q2bank/blob/main/readme_images/request_flow.png?raw=true"/>
 
 <h3>Data base explanation</h3>
 
 1. Relations in database are in the image bellow:
 
-<img src="github.com/aaguero96/technical_challenge_q2bank/readme_images/data_base_relations.png?raw=true"/>
+<img src="https://github.com/aaguero96/technical_challenge_q2bank/blob/main/readme_images/data_base_relations.png?raw=true"/>
 
 2. Details about tables in database
 
@@ -338,19 +338,19 @@
 1. Import collection to postman
 - In this repository has one file name `psotman.json`
 - Visit postman and select option `import` (as image bellow)
-<img src="github.com/aaguero96/technical_challenge_q2bank/readme_images/postman_1.png?raw=true"/>
+<img src="https://github.com/aaguero96/technical_challenge_q2bank/blob/main/readme_images/postman_1.png?raw=true"/>
 
 2. Defining postman envs
 - In postman select option `Environments` (as image bellow)
-<img src="github.com/aaguero96/technical_challenge_q2bank/readme_images/postman_2.png?raw=true"/>
+<img src="https://github.com/aaguero96/technical_challenge_q2bank/blob/main/readme_images/postman_2.png?raw=true"/>
 - Create Environment named DEV (as image bellow)
-<img src="github.com/aaguero96/technical_challenge_q2bank/readme_images/postman_3.png?raw=true"/>
+<img src="https://github.com/aaguero96/technical_challenge_q2bank/blob/main/readme_images/postman_3.png?raw=true"/>
 - Up right on page you have to select env DEV
-<img src="github.com/aaguero96/technical_challenge_q2bank/readme_images/postman_4.png?raw=true"/>
+<img src="https://github.com/aaguero96/technical_challenge_q2bank/blob/main/readme_images/postman_4.png?raw=true"/>
 
 3. Use collection
 - In postman select option `Collections` and you have acees to all endpoints (as image bellow)
-<img src="github.com/aaguero96/technical_challenge_q2bank/readme_images/postman_5.png?raw=true"/>
+<img src="https://github.com/aaguero96/technical_challenge_q2bank/blob/main/readme_images/postman_5.png?raw=true"/>
 
 <h2>Requests in swagger</h2>
 
@@ -361,9 +361,9 @@
 - authenticated with Basic authorization: you have access just to endpoint PATCH /v1/wallets/:id
 3. Authenticate
 - To authenticate you press the button in up rigth on page (as image bellow)
-<img src="github.com/aaguero96/technical_challenge_q2bank/readme_images/swagger_1.png?raw=true"/>
+<img src="https://github.com/aaguero96/technical_challenge_q2bank/blob/main/readme_images/swagger_1.png?raw=true"/>
 - Fill the form with correct values (as image bellow)
-<img src="github.com/aaguero96/technical_challenge_q2bank/readme_images/swagger_2.png?raw=true"/>
+<img src="https://github.com/aaguero96/technical_challenge_q2bank/blob/main/readme_images/swagger_2.png?raw=true"/>
 - If token is "123456789abc987654321@@##" you have to fill just field BearerToken with "Bearer 123456789abc987654321@@##", Bearer as prefix is mandatory
 
 <h2>Next steps</h2>
