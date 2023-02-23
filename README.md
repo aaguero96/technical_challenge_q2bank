@@ -194,7 +194,7 @@
 }
 ```
 
-5. GET localhost:3000/v1/register_types
+5. GET localhost:3000/v1/register-types
 - Headers: Bearer token (or cookie "token" if has saved)
 - Response:
 ```
@@ -206,7 +206,7 @@
 ]
 ```
 
-6. GET localhost:3000/v1/user_types
+6. GET localhost:3000/v1/user-types
 - Headers: Bearer token (or cookie "token" if has saved)
 - Response:
 ```
@@ -218,7 +218,7 @@
 ]
 ```
 
-7. GET localhost:3000/v1/user_types/:id
+7. GET localhost:3000/v1/user-types/:id
 - Headers: Bearer token (or cookie "token" if has saved)
 - Params: `id int`
 - Response:
