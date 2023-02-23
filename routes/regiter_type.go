@@ -7,7 +7,7 @@ import (
 )
 
 func NewRegisterTypeRoutes(rg *gin.RouterGroup, rth register_type_handler.RegisterTypeHandler) {
-	registerTypes := rg.Group("/register_types")
+	registerTypes := rg.Group("/register-types")
 
 	registerTypes.Use(middleware.Authorization)
 	registerTypes.GET("/", rth.GetAll)

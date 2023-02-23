@@ -26,7 +26,7 @@ func NewUserHandler(us user_service.UserService) userHandler {
 // @Produce 					json
 // @Tags 							user
 // @Router						/v1/users [get]
-// @Success						200 {object} []userService.UserResponse
+// @Success						200 {object} []user_service.UserResponse
 // @Failure						500 {error} error
 func (uh userHandler) GetAll(ctx *gin.Context) {
 	users, err := uh.userService.GetAll()
@@ -46,7 +46,7 @@ func (uh userHandler) GetAll(ctx *gin.Context) {
 // @Tags 								user
 // @Param   						id path int true "user id"
 // @Router							/v1/users/{id} [get]
-// @Success							200 {object} userService.GetByIdResponse
+// @Success							200 {object} user_service.GetByIdResponse
 // @Failure							400 {error} error
 // @Failure							500 {error} error
 func (uh userHandler) GetById(ctx *gin.Context) {
@@ -74,7 +74,7 @@ func (uh userHandler) GetById(ctx *gin.Context) {
 // @Tags 								user
 // @Param   						user body CreateUserRequest true "User data"
 // @Router							/v1/users [post]
-// @Success							200 {object} userService.CreateUserResponse
+// @Success							200 {object} user_service.CreateUserResponse
 // @Failure							400 {error} error
 // @Failure							500 {error} error
 func (uh userHandler) CreateUser(ctx *gin.Context) {
@@ -94,14 +94,14 @@ func (uh userHandler) CreateUser(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, response)
 }
 
-// CreateUser						godoc
-// @Summary							Create user
-// @Description 				Create user
+// LoginUser						godoc
+// @Summary							Login user
+// @Description 				Login user
 // @Produce 						json
 // @Tags 								login
 // @Param   						user body LoginRequest true "User credencial"
 // @Router							/v1/login [post]
-// @Success							200 {object} userService.LoginUserResponse
+// @Success							200 {object} user_service.LoginUserResponse
 // @Failure							400 {error} error
 // @Failure							500 {error} error
 func (uh userHandler) LoginUser(ctx *gin.Context) {

@@ -7,7 +7,7 @@ import (
 )
 
 func NewUserTypeRoutes(rg *gin.RouterGroup, uth user_type_handler.UserTypeHandler) {
-	userTypes := rg.Group("/user_types")
+	userTypes := rg.Group("/user-types")
 
 	userTypes.Use(middleware.Authorization)
 	userTypes.GET("/:id", uth.GetById)

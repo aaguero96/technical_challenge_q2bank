@@ -7,14 +7,14 @@ definitions:
       walletID:
         type: integer
     type: object
-  registerTypeService.RegisterTypeResponse:
+  register_type_service.RegisterTypeResponse:
     properties:
       id:
         type: integer
       type:
         type: string
     type: object
-  transactionHandler.CreateTransactionRequest:
+  transaction_handler.CreateTransactionRequest:
     properties:
       amount:
         type: number
@@ -23,20 +23,7 @@ definitions:
       payer_id:
         type: integer
     type: object
-  transactionService.CreateTransactionResponse:
-    properties:
-      amount:
-        type: number
-      payee_id:
-        type: integer
-      payer_id:
-        type: integer
-      status:
-        type: string
-      transaction_id:
-        type: integer
-    type: object
-  transactionService.GetByIdResponse:
+  transaction_service.CreateTransactionResponse:
     properties:
       amount:
         type: number
@@ -49,7 +36,20 @@ definitions:
       transaction_id:
         type: integer
     type: object
-  transactionService.TransactionResponse:
+  transaction_service.GetByIdResponse:
+    properties:
+      amount:
+        type: number
+      payee_id:
+        type: integer
+      payer_id:
+        type: integer
+      status:
+        type: string
+      transaction_id:
+        type: integer
+    type: object
+  transaction_service.TransactionResponse:
     properties:
       amount:
         type: number
@@ -60,7 +60,7 @@ definitions:
       status:
         type: string
     type: object
-  userHandler.CreateUserRequest:
+  user_handler.CreateUserRequest:
     properties:
       email:
         type: string
@@ -75,21 +75,21 @@ definitions:
       user_type_id:
         type: integer
     type: object
-  userHandler.LoginRequest:
+  user_handler.LoginRequest:
     properties:
       email:
         type: string
       password:
         type: string
     type: object
-  userService.CreateUserResponse:
+  user_service.CreateUserResponse:
     properties:
       expiring_in:
         type: string
       token:
         type: string
     type: object
-  userService.GetByIdResponse:
+  user_service.GetByIdResponse:
     properties:
       email:
         type: string
@@ -104,14 +104,14 @@ definitions:
       wallet_id:
         type: integer
     type: object
-  userService.LoginUserResponse:
+  user_service.LoginUserResponse:
     properties:
       expiring_in:
         type: string
       token:
         type: string
     type: object
-  userService.UserResponse:
+  user_service.UserResponse:
     properties:
       email:
         type: string
@@ -120,26 +120,33 @@ definitions:
       wallet_id:
         type: integer
     type: object
-  userTypeService.GetByIdResponse:
+  user_type_service.GetByIdResponse:
     properties:
       user_type:
         type: string
       user_type_id:
         type: integer
     type: object
-  userTypeService.UserTypeResponse:
+  user_type_service.UserTypeResponse:
     properties:
       id:
         type: integer
       type:
         type: string
     type: object
-  walletHandler.AddAmountRequest:
+  wallet_handler.AddAmountRequest:
     properties:
       amount:
         type: number
     type: object
-  walletService.WalletResponse:
+  wallet_service.GetByIdResponse:
+    properties:
+      amount:
+        type: number
+      wallet_id:
+        type: integer
+    type: object
+  wallet_service.WalletResponse:
     properties:
       amount:
         type: number
@@ -156,21 +163,21 @@ info:
 paths:
   /v1/login:
     post:
-      description: Create user
+      description: Login user
       parameters:
       - description: User credencial
         in: body
         name: user
         required: true
         schema:
-          $ref: '#/definitions/userHandler.LoginRequest'
+          $ref: '#/definitions/user_handler.LoginRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/userService.LoginUserResponse'
+            $ref: '#/definitions/user_service.LoginUserResponse'
         "400":
           description: Bad Request
           schema:
@@ -179,10 +186,10 @@ paths:
           description: Internal Server Error
           schema:
             type: error
-      summary: Create user
+      summary: Login user
       tags:
       - login
-  /v1/register_types:
+  /v1/register-types:
     get:
       description: Get all register types
       produces:
@@ -192,7 +199,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/registerTypeService.RegisterTypeResponse'
+              $ref: '#/definitions/register_type_service.RegisterTypeResponse'
             type: array
         "500":
           description: Internal Server Error
@@ -213,7 +220,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/transactionService.TransactionResponse'
+              $ref: '#/definitions/transaction_service.TransactionResponse'
             type: array
         "500":
           description: Internal Server Error
@@ -232,14 +239,14 @@ paths:
         name: transaction
         required: true
         schema:
-          $ref: '#/definitions/transactionHandler.CreateTransactionRequest'
+          $ref: '#/definitions/transaction_handler.CreateTransactionRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/transactionService.CreateTransactionResponse'
+            $ref: '#/definitions/transaction_service.CreateTransactionResponse'
         "400":
           description: Bad Request
           schema:
@@ -294,7 +301,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/transactionService.GetByIdResponse'
+            $ref: '#/definitions/transaction_service.GetByIdResponse'
         "400":
           description: Bad Request
           schema:
@@ -308,7 +315,7 @@ paths:
       summary: Get transaction by id
       tags:
       - transaction
-  /v1/user_types:
+  /v1/user-types:
     get:
       description: Get all user types
       produces:
@@ -318,7 +325,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/userTypeService.UserTypeResponse'
+              $ref: '#/definitions/user_type_service.UserTypeResponse'
             type: array
         "500":
           description: Internal Server Error
@@ -329,7 +336,7 @@ paths:
       summary: Get all user types
       tags:
       - user type
-  /v1/user_types/{id}:
+  /v1/user-types/{id}:
     get:
       description: Get user type by id
       parameters:
@@ -344,7 +351,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/userTypeService.GetByIdResponse'
+            $ref: '#/definitions/user_type_service.GetByIdResponse'
         "400":
           description: Bad Request
           schema:
@@ -368,7 +375,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/userService.UserResponse'
+              $ref: '#/definitions/user_service.UserResponse'
             type: array
         "500":
           description: Internal Server Error
@@ -387,14 +394,14 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/userHandler.CreateUserRequest'
+          $ref: '#/definitions/user_handler.CreateUserRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/userService.CreateUserResponse'
+            $ref: '#/definitions/user_service.CreateUserResponse'
         "400":
           description: Bad Request
           schema:
@@ -421,7 +428,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/userService.GetByIdResponse'
+            $ref: '#/definitions/user_service.GetByIdResponse'
         "400":
           description: Bad Request
           schema:
@@ -445,7 +452,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/walletService.WalletResponse'
+              $ref: '#/definitions/wallet_service.WalletResponse'
             type: array
         "500":
           description: Internal Server Error
@@ -471,7 +478,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/userTypeService.GetByIdResponse'
+            $ref: '#/definitions/wallet_service.GetByIdResponse'
         "400":
           description: Bad Request
           schema:
@@ -499,7 +506,7 @@ paths:
         name: amount
         required: true
         schema:
-          $ref: '#/definitions/walletHandler.AddAmountRequest'
+          $ref: '#/definitions/wallet_handler.AddAmountRequest'
       produces:
       - application/json
       responses:
