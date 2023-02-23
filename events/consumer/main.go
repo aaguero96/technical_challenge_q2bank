@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"os/signal"
 	"sync"
 	"syscall"
+	"time"
 
 	"github.com/aaguero96/technical_challenge_q2bank/events/consumer/handler"
 	"github.com/aaguero96/technical_challenge_q2bank/events/producer"
@@ -87,18 +89,59 @@ func consumeEvents() {
 	}
 }
 
-// func consumePendingEvents() {
-// 	ticker := time.Tick(time.Second * 30)
+func consumePendingEvents() {
 
-// 	for {
-// 		select {
-// 		case <- ticker:
-// 			func () {
+	ticker := time.Tick(time.Second * 30)
+	for {
+		select {
+		case <-ticker:
 
-// 			}
-// 		}
-// 	}
-// }
+			func() {
+
+				var streamsRetry []string
+				pendingStreams, err := initializers.Client.XPendingExt(&redis.XPendingExtArgs{
+					Stream: os.Getenv("STREAM_REDIS_NAME"),
+					Group:  os.Getenv("CONSUMER_GROUP_REDIS_NAME"),
+					Start:  "0",
+					End:    "+",
+					Count:  10,
+					//Consumer string
+				}).Result()
+
+				if err != nil {
+					panic(err)
+				}
+
+				for _, stream := range pendingStreams {
+					streamsRetry = append(streamsRetry, stream.ID)
+				}
+
+				if len(streamsRetry) > 0 {
+					streams, err := initializers.Client.XClaim(&redis.XClaimArgs{
+						Stream:   os.Getenv("STREAM_REDIS_NAME"),
+						Group:    os.Getenv("CONSUMER_GROUP_REDIS_NAME"),
+						Consumer: consumerName,
+						Messages: streamsRetry,
+						MinIdle:  30 * time.Second,
+					}).Result()
+
+					if err != nil {
+						log.Printf("err on process pending: %+v\n", err)
+						return
+					}
+
+					for _, stream := range streams {
+						waitGroup.Add(1)
+						go processStream(stream, true)
+					}
+					waitGroup.Wait()
+				}
+
+				fmt.Println("process pending streams at ", time.Now().Format(time.RFC3339))
+			}()
+		}
+	}
+}
 
 func main() {
 	// Start Repositories
@@ -112,6 +155,7 @@ func main() {
 	evs = external_validator_service.NewExternalValidatorService(validator.NewValidatorExternalAPI())
 
 	go consumeEvents()
+	go consumePendingEvents()
 
 	chanOS := make(chan os.Signal, 1)
 	signal.Notify(chanOS, syscall.SIGINT, syscall.SIGTERM)
