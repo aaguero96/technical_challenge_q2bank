@@ -28,7 +28,7 @@ func NewWalletHandler(ws wallet_service.WalletService) walletHandler {
 // @Produce 					json
 // @Tags 							wallet
 // @Router						/v1/wallets [get]
-// @Success						200 {object} []walletService.WalletResponse
+// @Success						200 {object} []wallet_service.WalletResponse
 // @Failure						500 {error} error
 func (wh walletHandler) GetAll(ctx *gin.Context) {
 	wallets, err := wh.walletService.GetAll()
@@ -48,7 +48,7 @@ func (wh walletHandler) GetAll(ctx *gin.Context) {
 // @Tags 								wallet
 // @Param   						id path int true "wallet id"
 // @Router							/v1/wallets/{id} [get]
-// @Success							200 {object} userTypeService.GetByIdResponse
+// @Success							200 {object} wallet_service.GetByIdResponse
 // @Failure							400 {error} error
 // @Failure							500 {error} error
 func (wh walletHandler) GetById(ctx *gin.Context) {

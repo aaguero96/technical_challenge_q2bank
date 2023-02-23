@@ -17,14 +17,14 @@ const docTemplate = `{
     "paths": {
         "/v1/login": {
             "post": {
-                "description": "Create user",
+                "description": "Login user",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "login"
                 ],
-                "summary": "Create user",
+                "summary": "Login user",
                 "parameters": [
                     {
                         "description": "User credencial",
@@ -32,7 +32,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/userHandler.LoginRequest"
+                            "$ref": "#/definitions/user_handler.LoginRequest"
                         }
                     }
                 ],
@@ -40,7 +40,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/userService.LoginUserResponse"
+                            "$ref": "#/definitions/user_service.LoginUserResponse"
                         }
                     },
                     "400": {
@@ -58,7 +58,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/register_types": {
+        "/v1/register-types": {
             "get": {
                 "security": [
                     {
@@ -79,7 +79,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/registerTypeService.RegisterTypeResponse"
+                                "$ref": "#/definitions/register_type_service.RegisterTypeResponse"
                             }
                         }
                     },
@@ -113,7 +113,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/transactionService.TransactionResponse"
+                                "$ref": "#/definitions/transaction_service.TransactionResponse"
                             }
                         }
                     },
@@ -146,7 +146,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/transactionHandler.CreateTransactionRequest"
+                            "$ref": "#/definitions/transaction_handler.CreateTransactionRequest"
                         }
                     }
                 ],
@@ -154,7 +154,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/transactionService.CreateTransactionResponse"
+                            "$ref": "#/definitions/transaction_service.CreateTransactionResponse"
                         }
                     },
                     "400": {
@@ -200,7 +200,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/transactionService.GetByIdResponse"
+                            "$ref": "#/definitions/transaction_service.GetByIdResponse"
                         }
                     },
                     "400": {
@@ -259,7 +259,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/user_types": {
+        "/v1/user-types": {
             "get": {
                 "security": [
                     {
@@ -280,7 +280,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/userTypeService.UserTypeResponse"
+                                "$ref": "#/definitions/user_type_service.UserTypeResponse"
                             }
                         }
                     },
@@ -293,7 +293,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/user_types/{id}": {
+        "/v1/user-types/{id}": {
             "get": {
                 "security": [
                     {
@@ -321,7 +321,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/userTypeService.GetByIdResponse"
+                            "$ref": "#/definitions/user_type_service.GetByIdResponse"
                         }
                     },
                     "400": {
@@ -360,7 +360,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/userService.UserResponse"
+                                "$ref": "#/definitions/user_service.UserResponse"
                             }
                         }
                     },
@@ -388,7 +388,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/userHandler.CreateUserRequest"
+                            "$ref": "#/definitions/user_handler.CreateUserRequest"
                         }
                     }
                 ],
@@ -396,7 +396,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/userService.CreateUserResponse"
+                            "$ref": "#/definitions/user_service.CreateUserResponse"
                         }
                     },
                     "400": {
@@ -442,7 +442,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/userService.GetByIdResponse"
+                            "$ref": "#/definitions/user_service.GetByIdResponse"
                         }
                     },
                     "400": {
@@ -481,7 +481,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/walletService.WalletResponse"
+                                "$ref": "#/definitions/wallet_service.WalletResponse"
                             }
                         }
                     },
@@ -522,7 +522,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/userTypeService.GetByIdResponse"
+                            "$ref": "#/definitions/wallet_service.GetByIdResponse"
                         }
                     },
                     "400": {
@@ -567,7 +567,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/walletHandler.AddAmountRequest"
+                            "$ref": "#/definitions/wallet_handler.AddAmountRequest"
                         }
                     }
                 ],
@@ -612,7 +612,7 @@ const docTemplate = `{
                 }
             }
         },
-        "registerTypeService.RegisterTypeResponse": {
+        "register_type_service.RegisterTypeResponse": {
             "type": "object",
             "properties": {
                 "id": {
@@ -623,7 +623,7 @@ const docTemplate = `{
                 }
             }
         },
-        "transactionHandler.CreateTransactionRequest": {
+        "transaction_handler.CreateTransactionRequest": {
             "type": "object",
             "properties": {
                 "amount": {
@@ -637,27 +637,7 @@ const docTemplate = `{
                 }
             }
         },
-        "transactionService.CreateTransactionResponse": {
-            "type": "object",
-            "properties": {
-                "amount": {
-                    "type": "number"
-                },
-                "payee_id": {
-                    "type": "integer"
-                },
-                "payer_id": {
-                    "type": "integer"
-                },
-                "status": {
-                    "type": "string"
-                },
-                "transaction_id": {
-                    "type": "integer"
-                }
-            }
-        },
-        "transactionService.GetByIdResponse": {
+        "transaction_service.CreateTransactionResponse": {
             "type": "object",
             "properties": {
                 "amount": {
@@ -677,7 +657,27 @@ const docTemplate = `{
                 }
             }
         },
-        "transactionService.TransactionResponse": {
+        "transaction_service.GetByIdResponse": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "number"
+                },
+                "payee_id": {
+                    "type": "integer"
+                },
+                "payer_id": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "transaction_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "transaction_service.TransactionResponse": {
             "type": "object",
             "properties": {
                 "amount": {
@@ -694,7 +694,7 @@ const docTemplate = `{
                 }
             }
         },
-        "userHandler.CreateUserRequest": {
+        "user_handler.CreateUserRequest": {
             "type": "object",
             "properties": {
                 "email": {
@@ -717,7 +717,7 @@ const docTemplate = `{
                 }
             }
         },
-        "userHandler.LoginRequest": {
+        "user_handler.LoginRequest": {
             "type": "object",
             "properties": {
                 "email": {
@@ -728,7 +728,7 @@ const docTemplate = `{
                 }
             }
         },
-        "userService.CreateUserResponse": {
+        "user_service.CreateUserResponse": {
             "type": "object",
             "properties": {
                 "expiring_in": {
@@ -739,7 +739,7 @@ const docTemplate = `{
                 }
             }
         },
-        "userService.GetByIdResponse": {
+        "user_service.GetByIdResponse": {
             "type": "object",
             "properties": {
                 "email": {
@@ -762,7 +762,7 @@ const docTemplate = `{
                 }
             }
         },
-        "userService.LoginUserResponse": {
+        "user_service.LoginUserResponse": {
             "type": "object",
             "properties": {
                 "expiring_in": {
@@ -773,7 +773,7 @@ const docTemplate = `{
                 }
             }
         },
-        "userService.UserResponse": {
+        "user_service.UserResponse": {
             "type": "object",
             "properties": {
                 "email": {
@@ -787,7 +787,7 @@ const docTemplate = `{
                 }
             }
         },
-        "userTypeService.GetByIdResponse": {
+        "user_type_service.GetByIdResponse": {
             "type": "object",
             "properties": {
                 "user_type": {
@@ -798,7 +798,7 @@ const docTemplate = `{
                 }
             }
         },
-        "userTypeService.UserTypeResponse": {
+        "user_type_service.UserTypeResponse": {
             "type": "object",
             "properties": {
                 "id": {
@@ -809,7 +809,7 @@ const docTemplate = `{
                 }
             }
         },
-        "walletHandler.AddAmountRequest": {
+        "wallet_handler.AddAmountRequest": {
             "type": "object",
             "properties": {
                 "amount": {
@@ -817,7 +817,18 @@ const docTemplate = `{
                 }
             }
         },
-        "walletService.WalletResponse": {
+        "wallet_service.GetByIdResponse": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "number"
+                },
+                "wallet_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "wallet_service.WalletResponse": {
             "type": "object",
             "properties": {
                 "amount": {

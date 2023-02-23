@@ -28,7 +28,7 @@ func NewTransactionHandler(ts transaction_service.TransactionService) transactio
 // @Produce 					json
 // @Tags 							transaction
 // @Router						/v1/transactions [get]
-// @Success						200 {object} []transactionService.TransactionResponse
+// @Success						200 {object} []transaction_service.TransactionResponse
 // @Failure						500 {error} error
 func (th transactionHandler) GetAll(ctx *gin.Context) {
 	transactions, err := th.transactionService.GetAll()
@@ -48,7 +48,7 @@ func (th transactionHandler) GetAll(ctx *gin.Context) {
 // @Tags 								transaction
 // @Param   						transaction body CreateTransactionRequest true "Transaction data"
 // @Router							/v1/transactions [post]
-// @Success							201 {object} transactionService.CreateTransactionResponse
+// @Success							201 {object} transaction_service.CreateTransactionResponse
 // @Failure							400 {error} error
 // @Failure							500 {error} error
 func (th transactionHandler) CreateTransaction(ctx *gin.Context) {
@@ -112,7 +112,7 @@ func (th transactionHandler) CancelTransaction(ctx *gin.Context) {
 // @Tags 								transaction
 // @Param   						id path int true "transaction id"
 // @Router							/v1/transactions/{id} [get]
-// @Success							200 {object} transactionService.GetByIdResponse
+// @Success							200 {object} transaction_service.GetByIdResponse
 // @Failure							400 {error} error
 // @Failure							500 {error} error
 func (th transactionHandler) GetById(ctx *gin.Context) {

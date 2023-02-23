@@ -26,8 +26,8 @@ func NewRegisterTypeHandler(rts register_type_service.RegisterTypeService) regis
 // @Description 			Get all register types
 // @Produce 					json
 // @Tags 							register type
-// @Router						/v1/register_types [get]
-// @Success						200 {object} []registerTypeService.RegisterTypeResponse
+// @Router						/v1/register-types [get]
+// @Success						200 {object} []register_type_service.RegisterTypeResponse
 // @Failure						500 {error} error
 func (rth registerTypeHandler) GetAll(ctx *gin.Context) {
 	registerTypes, err := rth.registerTypeService.GetAll()
