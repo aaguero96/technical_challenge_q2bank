@@ -4,6 +4,7 @@ reset-db:
 
 # Run dev will run application but if have onde save will rebuild automatically
 run-dev:
+	docker-compose stop api
 	nodemon --exec go run main.go --signal SIGTERM
 
 # Reset entire application
