@@ -244,6 +244,7 @@
 {
   "amount": float
 }
+```
 - Response:
 ```
 {
@@ -261,6 +262,7 @@
   "payee_id": int,
   "amount": float
 }
+```
 - Response:
 ```
 {
