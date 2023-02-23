@@ -91,7 +91,7 @@
 
 <h3>Request flow</h3>
 
-<img src="github.com/aaguero96/technical_challenge_q2bank/readme_images/request_flow.png?raw=true"/>
+<img src="https://github.com/aaguero96/technical_challenge_q2bank/readme_images/request_flow.png?raw=true"/>
 
 <h3>Data base explanation</h3>
 
@@ -140,6 +140,7 @@
   "register_type_id": int,
   "user_type_id": int
 }
+```
 - Response:
 ```
 {
@@ -303,3 +304,66 @@
 - Headers: Bearer token (or cookie "token" if has saved)
 - Params: `id int`
 - Response: ``
+
+<h2>Info about requests</h2>
+
+- To must of endpoints you need a token access, this token is adquired in two endpoints (the body is an example but work in that database):
+  - `POST localhost:3000/v1/login`
+  ```
+  body
+  {
+    "email": "email1@testmail.com",
+    "password": "Def4!t*1"
+  }
+  ```
+  - `POST localhost:3000/v1/users`
+  ```
+  body
+  {
+    "name": "andre aguero",
+    "email": "andre@teste.com",
+    "password": "Def4!t*0",
+    "register_number": 12345678900,
+    "register_type_id": 1,
+    "user_type_id": 2
+  }
+  ```
+- In endpoint `PATCH localhost:3000/v1/wallets/:id` the BasicAuth is:
+  - username: admin
+  - password: admin
+  - I put that here just because is demonstrative, this is not secure in real projects (this would be passed by keybase or other software)
+
+<h2>Requests in postman</h2>
+
+1. Import collection to postman
+- In this repository has one file name `psotman.json`
+- Visit postman and select option `import` (as image bellow)
+<img src="github.com/aaguero96/technical_challenge_q2bank/readme_images/postman_1.png?raw=true"/>
+
+2. Defining postman envs
+- In postman select option `Environments` (as image bellow)
+<img src="github.com/aaguero96/technical_challenge_q2bank/readme_images/postman_2.png?raw=true"/>
+- Create Environment named DEV (as image bellow)
+<img src="github.com/aaguero96/technical_challenge_q2bank/readme_images/postman_3.png?raw=true"/>
+- Up right on page you have to select env DEV
+<img src="github.com/aaguero96/technical_challenge_q2bank/readme_images/postman_4.png?raw=true"/>
+
+3. Use collection
+- In postman select option `Collections` and you have acees to all endpoints (as image bellow)
+<img src="github.com/aaguero96/technical_challenge_q2bank/readme_images/postman_5.png?raw=true"/>
+
+<h2>Requests in swagger</h2>
+
+1. Access `localhost:3000/docs/index.html`
+2. You have three options to navigate on swagger:
+- Not authenticated: you just have acces to not lock endpoints (POST /v1/login and POST /v1/users)
+- authenticated with BearerToken: you have acess to every endpoint but not to PATCH /v1/wallets/:id
+- authenticated with Basic authorization: you have access just to endpoint PATCH /v1/wallets/:id
+3. Authenticate
+- To authenticate you press the button in up rigth on page (as image bellow)
+<img src="github.com/aaguero96/technical_challenge_q2bank/readme_images/swagger_1.png?raw=true"/>
+- Fill the form with correct values (as image bellow)
+<img src="github.com/aaguero96/technical_challenge_q2bank/readme_images/swagger_2.png?raw=true"/>
+- If token is "123456789abc987654321@@##" you have to fill just field BearerToken with "Bearer 123456789abc987654321@@##", Bearer as prefix is mandatory
+
+<h2>Next steps</h2>
