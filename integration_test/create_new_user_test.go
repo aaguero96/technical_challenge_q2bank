@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"testing"
 
+	"github.com/aaguero96/technical_challenge_q2bank/integration_test/utils"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -79,5 +80,8 @@ func TestCreateNewUser(t *testing.T) {
 
 		// verify if expiredIn is correct
 		assert.Equal("30 minutes", data.ExpingIn)
+
+		// Reset database
+		utils.ResetDatabase()
 	})
 }
