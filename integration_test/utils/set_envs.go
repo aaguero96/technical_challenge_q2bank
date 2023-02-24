@@ -4,12 +4,12 @@ import "os"
 
 func SetEnvs() {
 	os.Setenv("PORT", "3000")
-	os.Setenv("DB_HOST", "localhost")
+	os.Setenv("DB_HOST", "0.0.0.0")
 	os.Setenv("DB_USER", "admin")
 	os.Setenv("DB_PASSWORD", "admin")
 	os.Setenv("DB_NAME", "develop")
 	os.Setenv("DB_PORT", "5432")
-	os.Setenv("REDIS_HOST", "localhost")
+	os.Setenv("REDIS_HOST", "0.0.0.0")
 	os.Setenv("REDIS_PORT", "6379")
 	os.Setenv("STREAM_REDIS_NAME", "myRedisStream")
 	os.Setenv("CONSUMER_GROUP_REDIS_NAME", "myConsumerGroup")
