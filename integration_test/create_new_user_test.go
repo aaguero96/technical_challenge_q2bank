@@ -39,7 +39,7 @@ func TestCreateNewUser(t *testing.T) {
 		}
 
 		// http request
-		request, err := http.NewRequest("POST", "http://localhost:3000/v1/users", bytes.NewBuffer(body))
+		request, err := http.NewRequest("POST", "http://0.0.0.0:3000/v1/users/", bytes.NewBuffer(body))
 		if err != nil {
 			fmt.Println("error when request is created")
 		}
