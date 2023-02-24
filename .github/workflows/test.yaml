@@ -32,7 +32,7 @@ jobs:
           go test -v ./handler/... 
   
   integration-tests:
-    envs:
+    env:
       PORT: 3000
       DB_HOST: localhost
       DB_USER: admin
