@@ -32,26 +32,14 @@ jobs:
           go test -v ./handler/... 
   
   integration-tests:
-    env:
-      PORT: 3000
-      DB_HOST: localhost
-      DB_USER: admin
-      DB_PASSWORD: admin
-      DB_NAME: develop
-      DB_PORT: 5432
-      REDIS_HOST: localhost
-      REDIS_PORT: 6379
-      STREAM_REDIS_NAME: myRedisStream
-      CONSUMER_GROUP_REDIS_NAME: myConsumerGroup
-      JWT_KEY: my_ultra_secret_p@ssword-for-jwt
-      ADMIN_USERNAME: admin
-      ADMIN_PASSWORD: admin
-
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout project
         uses: actions/checkout@v3
+
+      - name: Get envs
+        run: cp ./.env.example ./.env
 
       - name: Build the stack
         run: docker-compose up
