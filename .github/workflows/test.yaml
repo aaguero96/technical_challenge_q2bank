@@ -43,5 +43,5 @@ jobs:
       
       - name: Run integration tests
         run: |
-          Start-sleep -s 60
+          docker ps
           docker-compose exec -T api go test -v ./integration_test/...
