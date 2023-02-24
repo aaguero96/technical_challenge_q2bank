@@ -1,47 +1,49 @@
 package integration_test
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/aaguero96/technical_challenge_q2bank/integration_test/utils"
 )
 
 func TestEndpoints(t *testing.T) {
-	assert := assert.New(t)
-
 	// Create http client
 	client := &http.Client{}
 
-	t.Run("Endpoint GET /users exist", func(t *testing.T) {
-		// http request
-		request, err := http.NewRequest("GET", "http://0.0.0.0:3000/v1/users/", nil)
-		if err != nil {
-			fmt.Println("error when request is created")
-		}
+	// EndpointAssert struct
+	endpointAssert := utils.EndpointAssert{
+		BaseUrl: "http://0.0.0.0:3000",
+		T:       t,
+		Client:  client,
+	}
 
-		// http response
-		response, err := client.Do(request)
-		if err != nil {
-			fmt.Println("error when response is created")
-		}
-		defer response.Body.Close()
+	// test scenarios
+	tests := []struct {
+		method   string
+		endpoint string
+	}{
+		{method: "POST", endpoint: "/v1/login"},
+		{method: "GET", endpoint: "/v1/register-types"},
+		{method: "GET", endpoint: "/v1/transactions"},
+		{method: "GET", endpoint: "/v1/transactions/:id"},
+		{method: "POST", endpoint: "/v1/transactions/"},
+		{method: "DELETE", endpoint: "/v1/transactions/:id"},
+		{method: "GET", endpoint: "/v1/user-types"},
+		{method: "GET", endpoint: "/v1/user-types/:id"},
+		{method: "POST", endpoint: "/v1/users/"},
+		{method: "GET", endpoint: "/v1/users"},
+		{method: "GET", endpoint: "/v1/users/:id"},
+		{method: "PATCH", endpoint: "/v1/wallets/:id"},
+		{method: "GET", endpoint: "/v1/wallets"},
+		{method: "GET", endpoint: "/v1/wallets/:id"},
+	}
 
-		// Verify status code
-		assert.NotEqual(http.StatusNotFound, response.StatusCode)
-
-		// verify Response
-		responseData, err := ioutil.ReadAll(response.Body)
-		if err != nil {
-			fmt.Println("error to read response")
-		}
-		var data string
-		if err = json.Unmarshal([]byte(string(responseData)), &data); err != nil {
-			fmt.Println("data dont has correct types")
-		}
-		assert.NotEqual("404 page not found", data)
-	})
+	for _, test := range tests {
+		title := fmt.Sprintf("Endpoint %v %v exist", test.method, test.endpoint)
+		t.Run(title, func(t *testing.T) {
+			endpointAssert.Validate(test.method, test.endpoint)
+		})
+	}
 }
