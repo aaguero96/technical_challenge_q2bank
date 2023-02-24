@@ -51,7 +51,9 @@ jobs:
         run: cp ./.env.example ./.env
 
       - name: Build the stack
-        run: docker-compose up
+        run: docker-compose up -d
       
       - name: Run integration tests
-        run: docker-compose exec -T api go test -v ./integration_test/...
+        run: |
+          sleep 90s
+          docker-compose exec -T api go test -v ./integration_test/...
