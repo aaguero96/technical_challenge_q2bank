@@ -41,8 +41,15 @@ jobs:
       - name: Build the stack
         run: docker-compose up -d
       
+      - name: Setup golang environment
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.18.4'
+        
+      - name: Install dependencies
+        run:
+          go mod tidy
+      
       - name: Run integration tests
         run: |
-          docker ps
-          sleep 30s
-          docker-compose exec -T api go test -v ./integration_test/...
+          go test -v ./integration_test/...
