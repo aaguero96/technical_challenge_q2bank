@@ -52,10 +52,10 @@ func TestCreateNewUser(t *testing.T) {
 		}
 		defer response.Body.Close()
 
-		// Verify status code
+		// verify status code
 		assert.Equal(http.StatusCreated, response.StatusCode, "expected status %v, instead got %v", http.StatusCreated, response.StatusCode)
 
-		// // Verify Response
+		// // verify Response
 		// type reponse
 		type responseType struct {
 			Token    string `json:"token"`
