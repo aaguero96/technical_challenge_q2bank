@@ -38,6 +38,15 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v3
 
+      - name: Setup golang environment
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.18.4'
+        
+      - name: Install dependencies
+        run:
+          go mod tidy
+
       - name: Get envs
         run: cp ./.env.example ./.env
 
