@@ -4,7 +4,7 @@ import "os"
 
 func SetEnvs() {
 	os.Setenv("PORT", "3000")
-	os.Setenv("DB_HOST", "localhost")
+	os.Setenv("DB_HOST", "0.0.0.0")
 	os.Setenv("DB_USER", "admin")
 	os.Setenv("DB_PASSWORD", "admin")
 	os.Setenv("DB_NAME", "develop")
