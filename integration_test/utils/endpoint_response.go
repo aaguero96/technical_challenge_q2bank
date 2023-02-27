@@ -54,6 +54,8 @@ func EndpointResponse[T any](request EndpointRequest, method string, endpoint st
 	}
 	var data T
 	if err = json.Unmarshal([]byte(string(responseData)), &data); err != nil {
+		fmt.Println(responseData)
+		fmt.Println(data)
 		fmt.Println("data dont has correct types")
 		fmt.Println(err)
 	}

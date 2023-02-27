@@ -13,12 +13,12 @@ func CreateUser(name, email, password string, registerNumber, registerTypeID, us
 
 	// body
 	body := Body{
-		Name:           name,
-		Email:          email,
-		Password:       password,
-		RegisterNumber: registerNumber,
-		RegisterTypeID: registerTypeID,
-		UserTypeID:     userTypeID,
+		Name:           "name_0",
+		Email:          "name0@test.com",
+		Password:       "Def4!t*0",
+		RegisterNumber: 12345678900,
+		RegisterTypeID: 1,
+		UserTypeID:     1,
 	}
 
 	// type reponse
