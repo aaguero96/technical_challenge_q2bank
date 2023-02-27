@@ -25,12 +25,14 @@ func EndpointResponse[T any](request EndpointRequest, method string, endpoint st
 	body, err := json.Marshal(request.Body)
 	if err != nil {
 		fmt.Println("error when parsisng json")
+		fmt.Println(err)
 	}
 
 	// http request
 	httpRequest, err := http.NewRequest(method, endpoint, bytes.NewBuffer(body))
 	if err != nil {
 		fmt.Println("error when request is created")
+		fmt.Println(err)
 	}
 
 	// headers
@@ -40,6 +42,7 @@ func EndpointResponse[T any](request EndpointRequest, method string, endpoint st
 	response, err := client.Do(httpRequest)
 	if err != nil {
 		fmt.Println("error when response is created")
+		fmt.Println(err)
 	}
 	defer response.Body.Close()
 
@@ -47,17 +50,13 @@ func EndpointResponse[T any](request EndpointRequest, method string, endpoint st
 	responseData, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		fmt.Println("error to read response")
+		fmt.Println(err)
 	}
 	var data T
 	if err = json.Unmarshal([]byte(string(responseData)), &data); err != nil {
 		fmt.Println("data dont has correct types")
+		fmt.Println(err)
 	}
-
-	fmt.Println("===============================")
-	fmt.Println(response)
-	fmt.Println(request.Header.BearerToken)
-	fmt.Println(request)
-	fmt.Println(httpRequest)
 
 	return response.StatusCode, data, response.Cookies()
 }

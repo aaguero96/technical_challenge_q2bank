@@ -14,10 +14,10 @@ func TestGetAllWallets(t *testing.T) {
 	t.Run("Create user correctly but not accept cookies - OK CASE", func(t *testing.T) {
 		// create user
 		token := utils.CreateUser(
-			"name_0",
-			"name0@test.com",
-			"Def4!t*0",
-			12345678900,
+			"name_1",
+			"name1@test.com",
+			"Def4!t*01",
+			12345678901,
 			1,
 			1,
 		)
