@@ -8,8 +8,13 @@ import (
 	"net/http"
 )
 
+type EndpointHeader struct {
+	BearerToken string
+}
+
 type EndpointRequest struct {
-	Body interface{}
+	Body   interface{}
+	Header EndpointHeader
 }
 
 func EndpointResponse[T any](request EndpointRequest, method string, endpoint string) (int, T, []*http.Cookie) {
@@ -27,6 +32,9 @@ func EndpointResponse[T any](request EndpointRequest, method string, endpoint st
 	if err != nil {
 		fmt.Println("error when request is created")
 	}
+
+	// headers
+	httpRequest.Header.Add("Authorization", request.Header.BearerToken)
 
 	// http response
 	response, err := client.Do(httpRequest)

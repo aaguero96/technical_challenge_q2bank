@@ -29,7 +29,7 @@ func CreateUser(name, email, password string, registerNumber, registerTypeID, us
 
 	// response
 	_, data, _ := EndpointResponse[responseType](
-		EndpointRequest{Body: body}, "POST", "http://0.0.0.0:3000/v1/users?agree_cookie=false",
+		EndpointRequest{Body: body}, "POST", "http://localhost:3000/v1/users?agree_cookie=false",
 	)
 
 	return data.Token
