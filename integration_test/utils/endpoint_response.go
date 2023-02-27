@@ -53,9 +53,5 @@ func EndpointResponse[T any](request EndpointRequest, method string, endpoint st
 		fmt.Println("data dont has correct types")
 	}
 
-	fmt.Println("===============================")
-	fmt.Println(response)
-	fmt.Println(request.Header.BearerToken)
-
 	return response.StatusCode, data, response.Cookies()
 }
