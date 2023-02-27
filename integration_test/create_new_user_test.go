@@ -1,10 +1,6 @@
 package integration_test
 
 import (
-	"bytes"
-	"encoding/json"
-	"fmt"
-	"io/ioutil"
 	"net/http"
 	"testing"
 
@@ -27,59 +23,31 @@ func TestCreateNewUser(t *testing.T) {
 
 	t.Run("Create user correctly but not accept cookies - OK CASE", func(t *testing.T) {
 		// body
-		body, err := json.Marshal(Body{
+		body := Body{
 			Name:           "name_0",
 			Email:          "name0@test.com",
 			Password:       "Def4!t*0",
 			RegisterNumber: 12345678900,
 			RegisterTypeID: 1,
 			UserTypeID:     1,
-		})
-		if err != nil {
-			fmt.Println("error when parsisng json")
 		}
 
-		// http request
-		request, err := http.NewRequest("POST", "http://0.0.0.0:3000/v1/users?agree_cookie=false", bytes.NewBuffer(body))
-		if err != nil {
-			fmt.Println("error when request is created")
-		}
-
-		// http response
-		client := &http.Client{}
-		response, err := client.Do(request)
-		if err != nil {
-			fmt.Println("error when response is created")
-		}
-		defer response.Body.Close()
-
-		// verify status code
-		assert.Equal(http.StatusCreated, response.StatusCode, "expected status %v, instead got %v", http.StatusCreated, response.StatusCode)
-
-		// // verify Response
 		// type reponse
 		type responseType struct {
 			Token    string `json:"token"`
 			ExpingIn string `json:"expiring_in"`
 		}
 
-		// read response data
-		responseData, err := ioutil.ReadAll(response.Body)
-		if err != nil {
-			fmt.Println("error to read response")
-		}
+		// response
+		status, data, cookies := utils.EndpointResponse[responseType](
+			utils.EndpointRequest{Body: body}, "POST", "http://0.0.0.0:3000/v1/users?agree_cookie=false",
+		)
 
-		// verify if data has correct type
-		var data responseType
-		if err = json.Unmarshal([]byte(string(responseData)), &data); err != nil {
-			fmt.Println("data dont has correct types")
-		}
-
-		// verify if token not equal to ""
-		assert.NotEmpty(data.Token)
-
-		// verify if expiredIn is correct
+		// assertions
+		assert.Equal(http.StatusCreated, status)
 		assert.Equal("30 minutes", data.ExpingIn)
+		assert.NotEmpty(data.Token)
+		assert.Equal(len(cookies), 0)
 
 		// Reset database
 		utils.ResetDatabase()
@@ -102,11 +70,17 @@ func TestCreateNewUser(t *testing.T) {
 			ExpingIn string `json:"expiring_in"`
 		}
 
-		status, data := utils.Response[responseType](utils.Request{Body: body}, "POST", "http://0.0.0.0:3000/v1/users?agree_cookie=true")
+		// response
+		status, data, cookies := utils.EndpointResponse[responseType](
+			utils.EndpointRequest{Body: body}, "POST", "http://localhost:3000/v1/users?agree_cookie=true",
+		)
 
+		// assertions
 		assert.Equal(http.StatusCreated, status)
 		assert.Equal("30 minutes", data.ExpingIn)
 		assert.NotEmpty(data.Token)
+		assert.Equal(cookies[0].Name, "token")
+		assert.NotEmpty(cookies[0].Value)
 
 		// Reset database
 		utils.ResetDatabase()

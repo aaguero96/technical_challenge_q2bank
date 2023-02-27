@@ -8,11 +8,11 @@ import (
 	"net/http"
 )
 
-type Request struct {
+type EndpointRequest struct {
 	Body interface{}
 }
 
-func Response[T any](request Request, method string, endpoint string) (int, T) {
+func EndpointResponse[T any](request EndpointRequest, method string, endpoint string) (int, T, []*http.Cookie) {
 	// http client
 	client := &http.Client{}
 
@@ -45,5 +45,5 @@ func Response[T any](request Request, method string, endpoint string) (int, T) {
 		fmt.Println("data dont has correct types")
 	}
 
-	return response.StatusCode, data
+	return response.StatusCode, data, response.Cookies()
 }
