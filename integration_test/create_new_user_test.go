@@ -40,7 +40,7 @@ func TestCreateNewUser(t *testing.T) {
 		}
 
 		// http request
-		request, err := http.NewRequest("POST", "http://0.0.0.0:3000/v1/users/", bytes.NewBuffer(body))
+		request, err := http.NewRequest("POST", "http://0.0.0.0:3000/v1/users?agree_cookie=false", bytes.NewBuffer(body))
 		if err != nil {
 			fmt.Println("error when request is created")
 		}
@@ -83,5 +83,32 @@ func TestCreateNewUser(t *testing.T) {
 
 		// Reset database
 		utils.ResetDatabase()
+	})
+
+	t.Run("Create user correctly but accept cookies - OK CASE", func(t *testing.T) {
+		// body
+		body, err := json.Marshal(Body{
+			Name:           "name_0",
+			Email:          "name0@test.com",
+			Password:       "Def4!t*0",
+			RegisterNumber: 12345678900,
+			RegisterTypeID: 1,
+			UserTypeID:     1,
+		})
+		if err != nil {
+			fmt.Println("error when parsisng json")
+		}
+
+		// type reponse
+		type responseType struct {
+			Token    string `json:"token"`
+			ExpingIn string `json:"expiring_in"`
+		}
+
+		status, data := utils.Response[responseType](utils.Request{Body: body}, "GET", "http://0.0.0.0:3000/v1/users?agree_cookie=true")
+
+		assert.Equal(status, http.StatusOK)
+		assert.Equal(data.ExpingIn, "30 minutes")
+		assert.NotEmpty(data.Token)
 	})
 }
