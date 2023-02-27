@@ -56,6 +56,8 @@ func EndpointResponse[T any](request EndpointRequest, method string, endpoint st
 	fmt.Println("===============================")
 	fmt.Println(response)
 	fmt.Println(request.Header.BearerToken)
+	fmt.Println(request)
+	fmt.Println(httpRequest)
 
 	return response.StatusCode, data, response.Cookies()
 }
