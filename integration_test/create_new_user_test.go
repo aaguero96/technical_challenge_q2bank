@@ -40,7 +40,7 @@ func TestCreateNewUser(t *testing.T) {
 
 		// response
 		status, data, cookies := utils.EndpointResponse[responseType](
-			utils.EndpointRequest{Body: body}, "POST", "http://0.0.0.0:3000/v1/users?agree_cookie=false",
+			utils.EndpointRequest{Body: body}, "POST", utils.BASE_URL+"/v1/users?agree_cookie=false",
 		)
 
 		// assertions
@@ -72,7 +72,7 @@ func TestCreateNewUser(t *testing.T) {
 
 		// response
 		status, data, cookies := utils.EndpointResponse[responseType](
-			utils.EndpointRequest{Body: body}, "POST", "http://0.0.0.0:3000/v1/users?agree_cookie=true",
+			utils.EndpointRequest{Body: body}, "POST", utils.BASE_URL+"/v1/users?agree_cookie=true",
 		)
 
 		// assertions
