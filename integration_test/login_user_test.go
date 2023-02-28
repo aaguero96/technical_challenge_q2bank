@@ -57,7 +57,7 @@ func TestLoginUser(t *testing.T) {
 
 		// response
 		status, data, cookies := utils.EndpointResponse[responseType](
-			utils.EndpointRequest{Body: body}, "POST", utils.BASE_URL+"/v1/login?agree_cookie=false",
+			utils.EndpointRequest{Body: body}, "POST", utils.BASE_URL+"/v1/login?agree_cookie=true",
 		)
 
 		// assertions
