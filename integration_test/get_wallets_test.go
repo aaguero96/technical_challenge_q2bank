@@ -41,3 +41,34 @@ func TestGetAllWallets(t *testing.T) {
 		}, data)
 	})
 }
+
+func TestGetWalletByID(t *testing.T) {
+	assert := assert.New(t)
+
+	t.Run("Get wallet by id correctly - OK CASE", func(t *testing.T) {
+		// login user to get token
+		token := utils.LoginUser("email1@testmail.com", "Def4!t*1")
+
+		// type reponse
+		type responseType struct {
+			WalletID int     `json:"wallet_id"`
+			Amount   float64 `json:"amount"`
+		}
+
+		// response
+		status, data, _ := utils.EndpointResponse[responseType](
+			utils.EndpointRequest{
+				Body: nil,
+				Header: utils.EndpointHeader{
+					BearerToken: "Bearer " + token,
+				},
+			},
+			"GET",
+			utils.BASE_URL+"/v1/wallets/1",
+		)
+
+		// assertions
+		assert.Equal(http.StatusOK, status)
+		assert.Equal(responseType{WalletID: 1, Amount: 10000}, data)
+	})
+}
