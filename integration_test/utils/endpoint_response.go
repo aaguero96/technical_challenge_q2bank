@@ -54,10 +54,7 @@ func EndpointResponse[T any](request EndpointRequest, method string, endpoint st
 	}
 	var data T
 	if err = json.Unmarshal([]byte(string(responseData)), &data); err != nil {
-		fmt.Println(response)
-		fmt.Println(response.Body)
 		fmt.Println("data dont has correct types")
-		fmt.Println(err)
 	}
 
 	return response.StatusCode, data, response.Cookies()
