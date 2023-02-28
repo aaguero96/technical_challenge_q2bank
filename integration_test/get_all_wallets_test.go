@@ -36,7 +36,7 @@ func TestGetAllWallets(t *testing.T) {
 		// assertions
 		assert.Equal(http.StatusOK, status)
 		assert.Equal([]responseType{
-			{ID: 1, Amount: 100000},
+			{ID: 1, Amount: 10000},
 			{ID: 2, Amount: 20000},
 		}, data)
 	})
