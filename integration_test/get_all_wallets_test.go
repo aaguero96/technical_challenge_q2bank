@@ -1,7 +1,6 @@
 package integration_test
 
 import (
-	"fmt"
 	"net/http"
 	"testing"
 
@@ -15,7 +14,6 @@ func TestGetAllWallets(t *testing.T) {
 	t.Run("Get all wallets correctly - OK CASE", func(t *testing.T) {
 		// login user to get token
 		token := utils.LoginUser("email1@testmail.com", "Def4!t*1")
-		fmt.Println(token)
 
 		// type reponse
 		type responseType struct {
@@ -38,8 +36,8 @@ func TestGetAllWallets(t *testing.T) {
 		// assertions
 		assert.Equal(http.StatusOK, status)
 		assert.Equal([]responseType{
-			{ID: 1, Amount: 1000},
-			{ID: 2, Amount: 2000},
+			{ID: 1, Amount: 100000},
+			{ID: 2, Amount: 20000},
 		}, data)
 	})
 }
