@@ -8,13 +8,14 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestGetAllWallets(t *testing.T) {
+func TestGetAllUsers(t *testing.T) {
 	assert := assert.New(t)
 
 	// type reponse
 	type responseType struct {
-		ID     int     `json:"id"`
-		Amount float64 `json:"amount"`
+		Name     string `json:"name"`
+		Email    string `json:"email"`
+		WalletID int    `json:"wallet_id"`
 	}
 
 	t.Run("Get all wallets correctly - OK CASE", func(t *testing.T) {
@@ -30,25 +31,26 @@ func TestGetAllWallets(t *testing.T) {
 				},
 			},
 			"GET",
-			utils.BASE_URL+"/v1/wallets",
+			utils.BASE_URL+"/v1/users",
 		)
 
 		// assertions
 		assert.Equal(http.StatusOK, status)
 		assert.Equal([]responseType{
-			{ID: 1, Amount: 10000},
-			{ID: 2, Amount: 20000},
+			{Name: "name_1_common", Email: "email1@testmail.com", WalletID: 1},
+			{Name: "name_2_storekeeper", Email: "email2@testmail.com", WalletID: 2},
 		}, data)
 	})
 }
 
-func TestGetWalletByID(t *testing.T) {
+func TestGetUserByID(t *testing.T) {
 	assert := assert.New(t)
 
 	// type reponse
 	type responseType struct {
-		WalletID int     `json:"wallet_id"`
-		Amount   float64 `json:"amount"`
+		Name     string `json:"name"`
+		Email    string `json:"email"`
+		WalletID int    `json:"wallet_id"`
 	}
 
 	t.Run("Get wallet by id correctly - OK CASE", func(t *testing.T) {
@@ -64,11 +66,11 @@ func TestGetWalletByID(t *testing.T) {
 				},
 			},
 			"GET",
-			utils.BASE_URL+"/v1/wallets/1",
+			utils.BASE_URL+"/v1/users/1",
 		)
 
 		// assertions
 		assert.Equal(http.StatusOK, status)
-		assert.Equal(responseType{WalletID: 1, Amount: 10000}, data)
+		assert.Equal(responseType{Name: "name_1_common", Email: "email1@testmail.com", WalletID: 1}, data)
 	})
 }
