@@ -30,3 +30,30 @@ jobs:
           go test -v ./service/... 
           go test -v ./utils/... 
           go test -v ./handler/... 
+  
+  integration-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v3
+
+      - name: Setup golang environment
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.18.4'
+        
+      - name: Install dependencies
+        run:
+          go mod tidy
+
+      - name: Get envs
+        run: cp ./.env.example ./.env
+
+      - name: Build the stack
+        run: docker-compose up -d
+      
+      - name: Run integration tests
+        run: |
+          sleep 90s
+          docker-compose exec -T api go test -v ./integration_test/...

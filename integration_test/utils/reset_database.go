@@ -1,14 +1,11 @@
-package main
+package utils
 
 import (
 	"github.com/aaguero96/technical_challenge_q2bank/initializers"
 )
 
-func init() {
-	initializers.LoadEnvVariables()
+func ResetDatabase() {
+	SetEnvs()
 	initializers.ConnectDB()
-}
-
-func main() {
 	initializers.CreateDatabase()
 }
